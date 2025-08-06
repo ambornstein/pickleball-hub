@@ -1,18 +1,30 @@
-import CourtNavPanel from "@/components/CourtNavPanel";
+'use client'
+
 import HeaderBar from "@/components/HeaderBar";
 import LinkScroll from "@/components/LinkScroll";
+import Modal from "@/components/Modal";
+import SubmitLocationModal from "@/components/SubmitLocationModal";
+import Image from "next/image"
+import { useState } from "react";
 
 export default function Home() {
+  const [modalOpen, setModalOpen] = useState(false)
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen font-standard">
       <HeaderBar />
-      <main className="flex flex-col items-center justify-center overflow-clip">
-        <div className="flex flex-col h-[100vh-86px] space-y-12 items-center">
+      <main className="overflow-clip">
+        <div className="flex flex-col space-y-12 items-center">
           <LinkScroll />
           <div className="flex flex-row container gap-28 items-center">
-            <CourtNavPanel />
+            <div className="grid grid-cols-[32%_auto] grid-rows-2 aspect-[3/2] gap-4 w-[50%]">
+              <a href="/search" className="flex-col row-span-2 panel-link"><Image className="invert text-lg" src="/Map.png" width={75} height={75} alt="Map" />Map</a>
+
+              <a className="flex-row panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Search</a>
+              <div onClick={() => setModalOpen(true)} className="flex-row panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Submit Location</div>
+            </div>
             <div id="about" className="w-[50%]">
-              <h2 className="text-2xl text-center">About</h2>
+              <h2>About</h2>
               <p>
                 Houston Pickleball Hub is a public registry of pickleball establishments in the Houston Metropolitan Area.
                 It is meant to showcase a variety of locations with different schedules and options for play, so that everyone who visits can find the place that is best for them quickly and easily.
@@ -20,16 +32,17 @@ export default function Home() {
               </p>
               <br />
               <p>
-                This site was created to fill an important need for pickleball enthusiasts but also as a project to gain experience in user experience (UX) design. Because of this, the number 1 priority is how accessible and intuitive the site is for users, and whether it allows them to find what they are looking for efficiently. Feedback is necessary to the site improving and growing.
+                This site was created to fill an important need for pickleball enthusiasts but also as a project to gain experience in user experience (UX) design.
+                Because of this, the number 1 priority is how accessible and intuitive the site is for users, and whether it allows them to find what they are looking for efficiently.
+                Feedback is necessary to the site improving and growing.
               </p>
             </div>
           </div>
           <LinkScroll />
         </div>
-
         <div id="secondary" className="mt-36">
           <section id="partnership" className="container m-auto my-8">
-            <h2 className="text-2xl text-center my-4">Partnership</h2>
+            <h2>Partnership</h2>
             <p>
               If you are the owner of a pickleball establishment or are promoting a new establishment, contacting the administrator of this site is encouraged.
               While there is the option of submitting a pickleball space through this site, business owners would be advised to discuss with the site creator at email amborn02@gmail.com or via LinkedIn.
@@ -42,6 +55,9 @@ export default function Home() {
           </section>
         </div>
       </main>
+
+      <SubmitLocationModal isOpen={modalOpen} setIsOpen={setModalOpen}> </SubmitLocationModal>
+
       <footer className="flex gap-[24px] flex-wrap items-center justify-center">
         <p>Created by Andrei Bornstein — <a href="https://www.andreibornstein.com">andreibornstein.com</a></p>
       </footer>
