@@ -8,7 +8,7 @@ export default function RegisterPage() {
     return (<div className="center min-h-screen font-standard">
         <div className="panel">
             <h2>Register</h2>
-            <form className="flex flex-col gap-4 mt-8">
+            <form className="flex flex-col gap-4 mt-8" method="post" action="/api/auth/register">
                 <InputField label="Display Name" valueName="name" />
                 <InputField label="Email" valueName="email"
                     validationRegex={emailRegex}
