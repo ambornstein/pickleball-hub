@@ -3,14 +3,16 @@ import mongoose, { Schema, Document } from "mongoose"
 const LocationSchema = new mongoose.Schema({
     coordinates: {
         type: [Number],
-        required: false
+        required: true
     },
     name: String,
     address: String,
-    siteUrl: String,
-    zipCode: {type: Number, min: 77002, max: 77099, required: true},
+    url: String,
+    zipcode: {type: Number, min: 77002, max: 77099, required: true},
     openPlay: Boolean,
-    reservation: Boolean,
+    reservations: Boolean,
     lessons: Boolean,
 
 })
+
+export default mongoose.models.Location || mongoose.model("Location", LocationSchema)

@@ -1,15 +1,9 @@
-'use client'
-
 import HeaderBar from "@/components/HeaderBar";
 import LinkScroll from "@/components/LinkScroll";
 import LinkScrollReverse from "@/components/LinkScrollReverse";
-import SubmitLocationModal from "@/components/SubmitLocationModal";
 import Image from "next/image"
-import { useState } from "react";
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false)
-
   return (
     <div className="min-h-screen font-standard">
       <HeaderBar />
@@ -21,7 +15,7 @@ export default function Home() {
               <a href="/search" className="flex-col row-span-2 panel-link"><Image className="invert text-lg" src="/Map.png" width={75} height={75} alt="Map" />Map</a>
 
               <a className="panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Search</a>
-              <div onClick={() => setModalOpen(true)} className="panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Submit Location</div>
+              <a href="/submit-location" className="panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Submit Location</a>
             </div>
             <div id="about">
               <h2>About</h2>
@@ -55,9 +49,6 @@ export default function Home() {
           </section>
         </div>
       </main>
-
-      <SubmitLocationModal isOpen={modalOpen} setIsOpen={setModalOpen}> </SubmitLocationModal>
-
       <footer className="flex gap-[24px] flex-wrap items-center justify-center">
         <p>Created by Andrei Bornstein — <a href="https://www.andreibornstein.com">andreibornstein.com</a></p>
       </footer>
