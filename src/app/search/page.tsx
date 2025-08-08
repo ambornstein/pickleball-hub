@@ -26,7 +26,7 @@ export default function SearchPage() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-[320px_auto_320px] grid-rows-[36px_auto] gap-y-8 w-full h-[650px]">
+                <div className="grid grid-cols-[320px_auto_320px] grid-rows-[36px_auto] gap-y-8 gap-x-4 w-full h-[650px]">
                     <div className="flex items-center gap-12 col-start-2 h-full">
                         <input className="w-full h-12 bg-stone-900" type="text" />
                         <BiSearch className="text-4xl bg-stone-900" />

@@ -3,16 +3,28 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --interactive: #9D0759; /* Fuchsia */
+  --interactive: #9D0759;
+  /* Fuchsia */
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@layer components {
-  .button {
-    @apply font-bold italic border-2 px-4 py-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600;
+@layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #212 inset !important;
+      -webkit-text-fill-color: #eee;
   }
+}
 
+@layer components {
   .panel-link {
     @apply flex bg-slate-700 text-center items-center justify-center text-2xl gap-4 hover:bg-slate-500
   }
@@ -27,6 +39,24 @@
 
   .link {
     @apply underline text-cyan-600
+  }
+
+  .link-scrolling {
+    @apply w-fit text-nowrap overflow-hidden
+  }
+}
+
+@layer utilities {
+  .button {
+    @apply font-bold italic border-2 px-4 py-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600;
+  }
+
+  .text-input {
+    @apply w-full px-3 py-2 outline-1 border border-zinc-300 rounded-md focus:outline-none focus:border-fuchsia-600  focus:shadow shadow-sm
+  }
+
+  .text-input-label {
+    @apply absolute pointer-events-none cursor-text bg-background px-1 left-2.5 top-2
   }
 }
 
@@ -57,4 +87,28 @@ h1 {
 
 h2 {
   @apply text-2xl text-center my-4
+}
+
+h3 {
+  @apply text-2xl
+}
+
+/* Animation */
+
+@keyframes infinite-scroll-forward {
+  from {
+    transform: translateX(calc(-50% + 100vw))
+  }
+  to {
+    transform: translateX(0%)
+  }
+}
+
+@keyframes infinite-scroll-reverse {
+  from {
+    transform: translateX(0%)
+  }
+  to {
+    transform: translateX(calc(-50% + 100vw))
+  }
 }

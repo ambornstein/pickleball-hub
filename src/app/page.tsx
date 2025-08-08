@@ -2,7 +2,7 @@
 
 import HeaderBar from "@/components/HeaderBar";
 import LinkScroll from "@/components/LinkScroll";
-import Modal from "@/components/Modal";
+import LinkScrollReverse from "@/components/LinkScrollReverse";
 import SubmitLocationModal from "@/components/SubmitLocationModal";
 import Image from "next/image"
 import { useState } from "react";
@@ -16,14 +16,14 @@ export default function Home() {
       <main className="overflow-clip">
         <div className="flex flex-col space-y-12 items-center">
           <LinkScroll />
-          <div className="flex flex-row container gap-28 items-center">
-            <div className="grid grid-cols-[32%_auto] grid-rows-2 aspect-[3/2] gap-4 w-[50%]">
+          <div className="grid grid-cols-2 container gap-28 items-center">
+            <div className="grid grid-rows-2 grid-cols-[32%_auto] aspect-[3/2] gap-4">
               <a href="/search" className="flex-col row-span-2 panel-link"><Image className="invert text-lg" src="/Map.png" width={75} height={75} alt="Map" />Map</a>
 
-              <a className="flex-row panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Search</a>
-              <div onClick={() => setModalOpen(true)} className="flex-row panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Submit Location</div>
+              <a className="panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Search</a>
+              <div onClick={() => setModalOpen(true)} className="panel-link"><Image className="invert" src="/Map.png" width={75} height={75} alt="Map" />Submit Location</div>
             </div>
-            <div id="about" className="w-[50%]">
+            <div id="about">
               <h2>About</h2>
               <p>
                 Houston Pickleball Hub is a public registry of pickleball establishments in the Houston Metropolitan Area.
@@ -38,7 +38,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <LinkScroll />
+          <LinkScrollReverse />
         </div>
         <div id="secondary" className="mt-36">
           <section id="partnership" className="container m-auto my-8">

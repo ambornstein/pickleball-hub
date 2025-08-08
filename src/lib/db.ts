@@ -19,7 +19,7 @@ async function dbConnect() {
     }
 
     if (!cached.promise) {
-        cached.promise = mongoose.connect(mongoConnString).then((mongoose) => {
+        cached.promise = mongoose.connect(mongoConnString, {dbName: "pickleball"}).then((mongoose) => {
             return mongoose
         })
     }
