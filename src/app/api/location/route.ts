@@ -7,9 +7,17 @@ export async function GET(request: NextRequest) {
     try {
         await dbConnect();
 
-        const locations = await Location.find({});
+        const id = request.nextUrl.searchParams.get("id")
+        if (id) {
+            const locations = await Location.findById(id);
 
-        return Response.json(locations)
+            return Response.json(locations)
+        }
+        else {
+            const locations = await Location.find({});
+
+            return Response.json(locations)
+        }
     } catch (error) {
         if (error instanceof Error) {
             return new Response(error.message, { status: 500 })
