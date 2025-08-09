@@ -3,13 +3,29 @@ import { Document } from "mongoose";
 import Location from "@/lib/models/location"
 import dbConnect from "@/lib/db";
 
+export async function GET(request: NextRequest) {
+    try {
+        await dbConnect();
+
+        const locations = await Location.find({});
+
+        return Response.json(locations)
+    } catch (error) {
+        if (error instanceof Error) {
+            return new Response(error.message, { status: 500 })
+        }
+        else {
+            return new Response("Something went wrong", { status: 500 })
+        }
+    }
+}
+
 export async function POST(request: NextRequest) {
     try {
         await dbConnect();
 
         const formData = await request.formData()
         const dataObject = Object.fromEntries(formData)
-        console.log(dataObject)
 
         const geocodingEndpoint = new URL("https://api.mapbox.com/search/geocode/v6/forward")
 
@@ -20,17 +36,6 @@ export async function POST(request: NextRequest) {
 
         const coordinates = await fetch(geocodingEndpoint);
         const coordJSON = await coordinates.json();
-
-        console.log({
-            coordinates: coordJSON.features[0].geometry.coordinates,
-            name: dataObject.locationName,
-            address: dataObject.address,
-            url: dataObject.url,
-            zipcode: dataObject.zipcode,
-            openPlay: Boolean(dataObject.openPlay),
-            reservations: Boolean(dataObject.reservations),
-            lessons: Boolean(dataObject.lessons)
-        })
 
         const location: Document = new Location({
             coordinates: coordJSON.features[0].geometry.coordinates,
@@ -43,6 +48,8 @@ export async function POST(request: NextRequest) {
             lessons: Boolean(dataObject.lessons)
         })
 
+        console.log(location);
+
         await location.save()
 
         return new NextResponse("Success", { status: 200 })
@@ -54,6 +61,5 @@ export async function POST(request: NextRequest) {
         else {
             return new Response("Something went wrong", { status: 500 })
         }
-
     }
 }
