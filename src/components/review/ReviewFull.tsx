@@ -1,5 +1,5 @@
 import { CgProfile } from "react-icons/cg"
-import StarRating from "./StarRating"
+import StarRating from "../StarRating"
 
 export interface ReviewProps {
     rating: number,
