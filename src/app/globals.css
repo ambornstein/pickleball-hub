@@ -1,13 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --background: #ffffff;
+  --foreground: #171717; */
+  --background: #0a0a0a;
+  --foreground: #ededed;
   --interactive: #9D0759;
   /* Fuchsia */
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+
+  .mapboxgl-popup-content {
+    background: #171717 !important;
+    font-size: 16px;
+    padding: 1px;
+  }
+}
 
 @layer base {
 
@@ -26,12 +45,8 @@
 }
 
 @layer components {
-  .panel-link {
-    @apply flex bg-slate-700 text-center items-center justify-center text-2xl gap-4 hover:bg-slate-500
-  }
-
   .panel {
-    @apply ring-slate-200 outline-2 h-fit w-sm rounded-lg p-12
+    @apply ring-slate-200 outline-2 h-fit w-lg rounded-lg py-12 lg:px-24 px-6
   }
 
   .center {
@@ -43,13 +58,17 @@
   }
 
   .link-scrolling {
-    @apply w-fit text-nowrap overflow-hidden
+    @apply w-fit text-nowrap
   }
 }
 
 @layer utilities {
+  .panel-link {
+    @apply flex bg-slate-700 text-center items-center justify-center text-2xl gap-4 hover:bg-slate-500
+  }
+
   .button {
-    @apply font-bold italic border-2 px-4 py-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600;
+    @apply text-sm lg:text-lg h-fit font-bold italic border-2 p-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600;
   }
 
   .text-input {
@@ -58,6 +77,10 @@
 
   .text-input-label {
     @apply absolute pointer-events-none cursor-text bg-background px-1 left-2.5 top-2
+  }
+
+  .search-view {
+    @apply h-[70vh] lg:mx-0 mx-4
   }
 }
 
@@ -69,19 +92,6 @@
   --font-standard: var(--font-k2d);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-
-  .mapboxgl-popup-content {
-    background: #171717 !important;
-    font-size: 16px;
-    padding: 1px;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -89,7 +99,7 @@ body {
 }
 
 h1 {
-  @apply text-4xl text-center
+  @apply lg:text-4xl text-2xl text-center
 }
 
 h2 {

@@ -55,8 +55,8 @@ export default function MapPanel() {
 
     return (
         <>
-            <div className="h-[70vh]" ref={mapContainer}>
-                <div className="fixed z-10 bg-gray-700 rounded-md p-2 m-2 font-standard text-[16px]">
+            <div className="search-view" ref={mapContainer}>
+                <div className="sticky w-fit z-10 bg-gray-700 rounded-md p-2 m-2 font-standard text-[16px]">
                     Longitude: {lng.toFixed(2)} | Latitude: {lat.toFixed(2)} | Zoom: {zoom.toFixed(1)}
                 </div>
 
