@@ -2,7 +2,8 @@
 
 import InputField from "@/components/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
-import { AddressAutofill } from "@mapbox/search-js-react";
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
 import { useFormStatus } from "react-dom";
 
 function SubmitButton() {
@@ -11,7 +12,6 @@ function SubmitButton() {
 }
 
 export default function NewLocationPage() {
-
     return (
         <FormPageLayout>
             <h2>Submit Location</h2>
@@ -19,12 +19,12 @@ export default function NewLocationPage() {
                 <div className="grid grid-cols-2 gap-4">
                     <InputField className="col-span-2" label="Location Name" valueName="locationName"></InputField>
                     <InputField className="col-span-2" label="Site Link" valueName="url" type="url" />
-                    <AddressAutofill accessToken='pk.eyJ1IjoiYW1ib3Juc3RlaW4iLCJhIjoiY2x3ajhnYjBjMHk1cDJrbXdjZHdqaWZ3cyJ9._K7RJ6SvA6Tg2VtuZjfCig'>
+                    {/* <AddressAutofill accessToken='pk.eyJ1IjoiYW1ib3Juc3RlaW4iLCJhIjoiY2x3ajhnYjBjMHk1cDJrbXdjZHdqaWZ3cyJ9._K7RJ6SvA6Tg2VtuZjfCig'> */}
                         <InputField label="Address" valueName="address" autoComplete="address-line1" />
                         <input className="absolute collapse" name="zipcode" autoComplete="postal-code" />
                         <input className="absolute collapse" name="city" autoComplete="address-level2" />
                         <input className="absolute collapse" name="state" autoComplete="address-level2" />
-                    </AddressAutofill>
+                    {/* </AddressAutofill> */}
                     <InputField label="Phone Number" valueName="phoneNumber" />
                 </div>
                 <div className="flex flex-row justify-evenly w-full my-4">

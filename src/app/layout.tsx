@@ -30,6 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.3.0/web.js"></script>
+    </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${k2d.variable} antialiased`}
       >
