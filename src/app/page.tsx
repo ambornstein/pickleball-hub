@@ -15,15 +15,15 @@ export default function Home() {
             <div className="w-[80vw] grid grid-cols-1 gap-4 items-center   lg:max-w-[50%]
               xl:grid-cols-2 xl:px-28 xl:gap-12 xl:max-w-[80%]">
               <div className="grid grid-rows-2 grid-cols-[32%_auto] aspect-[3/2] gap-4">
-                <a href="/search" className="flex-col row-span-2 panel-link rounded-s-3xl">
+                <a href="/search" className="flex-col row-span-2 panel-link">
                   <CiSearch className="size-16" />
                   <span className="text-2xl lg:text-4xl">Search</span>
                 </a>
-                <a className="panel-link rounded-tr-3xl">
+                <a className="panel-link ">
                   <CiViewList className="size-16" />
                   <span className="text-2xl lg:text-4xl">Events</span>
                 </a>
-                <a href="/submit-location" className="panel-link rounded-br-3xl">
+                <a href="/submit-location" className="panel-link">
                   <BiMap className="size-16" />
                   <div className="flex flex-col">
                   <span className="text-2xl lg:text-4xl">Submit</span>
