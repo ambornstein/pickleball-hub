@@ -11,7 +11,7 @@ export default function RegisterPage() {
             <h2>Register</h2>
             <form className="flex flex-col gap-4 mt-8" method="post" action="/api/auth/register">
                 <InputField label="Display Name" valueName="name" />
-                <InputField label="Email" valueName="email"
+                <InputField label="Email" valueName="email" type="email"
                     validationRegex={emailRegex}
                     enforceMessage="Please enter a valid email." />
                 <InputField label="Password" valueName="password"

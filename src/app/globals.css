@@ -82,6 +82,10 @@
   .search-view {
     @apply h-[70vh] lg:mx-0 mx-4
   }
+
+  .fold-marker {
+    @apply w-12 h-12 absolute
+  }
 }
 
 @theme inline {

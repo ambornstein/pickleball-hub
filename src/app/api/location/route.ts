@@ -45,13 +45,16 @@ export async function POST(request: NextRequest) {
         const coordinates = await fetch(geocodingEndpoint);
         const coordJSON = await coordinates.json();
 
+        const zip = dataObject.zipcode ? dataObject.zipcode.toString() : coordJSON.features[0].properties.context.postcode.name
+
+        console.log(zip)
         const location: Document = new Location({
             coordinates: coordJSON.features[0].geometry.coordinates,
             name: dataObject.locationName,
             address: dataObject.address,
             url: dataObject.url,
             phoneNumber: dataObject.phoneNumber,
-            zipcode: dataObject.zipcode,
+            zipcode: zip,
             openPlay: Boolean(dataObject.openPlay),
             reservations: Boolean(dataObject.reservations),
             lessons: Boolean(dataObject.lessons)

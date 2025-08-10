@@ -25,7 +25,7 @@ export default function LoginPage() {
         <FormPageLayout>
             <h2>Sign In</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-8">
-                <InputField label="Email" valueName="email"
+                <InputField label="Email" type="email" valueName="email"
                     validationRegex={emailRegex}
                     enforceMessage="Please enter a valid email." />
                 <InputField label="Password" valueName="password"

@@ -21,11 +21,11 @@ export default function NewLocationPage() {
                     <InputField className="col-span-2" label="Site Link" valueName="url" type="url" />
                     {/* <AddressAutofill accessToken='pk.eyJ1IjoiYW1ib3Juc3RlaW4iLCJhIjoiY2x3ajhnYjBjMHk1cDJrbXdjZHdqaWZ3cyJ9._K7RJ6SvA6Tg2VtuZjfCig'> */}
                         <InputField label="Address" valueName="address" autoComplete="address-line1" />
-                        <input className="absolute collapse" name="zipcode" autoComplete="postal-code" />
-                        <input className="absolute collapse" name="city" autoComplete="address-level2" />
-                        <input className="absolute collapse" name="state" autoComplete="address-level2" />
+                        <input type="hidden" name="zipcode" required={false} autoComplete="postal-code" />
+                        <input type="hidden" name="city" required={false} autoComplete="address-level2" />
+                        <input type="hidden" name="state" required={false} autoComplete="address-level2" />
                     {/* </AddressAutofill> */}
-                    <InputField label="Phone Number" valueName="phoneNumber" />
+                    <InputField label="Phone Number" valueName="phoneNumber" type="tel" />
                 </div>
                 <div className="flex flex-row justify-evenly w-full my-4">
                     <label><input type="checkbox" name="openPlay" />Open Play</label>
