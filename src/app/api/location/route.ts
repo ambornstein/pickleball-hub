@@ -50,17 +50,16 @@ export async function POST(request: NextRequest) {
             name: dataObject.locationName,
             address: dataObject.address,
             url: dataObject.url,
+            phoneNumber: dataObject.phoneNumber,
             zipcode: dataObject.zipcode,
             openPlay: Boolean(dataObject.openPlay),
             reservations: Boolean(dataObject.reservations),
             lessons: Boolean(dataObject.lessons)
         })
 
-        console.log(location);
-
         await location.save()
 
-        return new NextResponse("Success", { status: 200 })
+        return NextResponse.redirect(new URL('/search', request.url))
     }
     catch (error) {
         if (error instanceof Error) {

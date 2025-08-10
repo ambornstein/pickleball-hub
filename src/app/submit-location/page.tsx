@@ -25,7 +25,7 @@ export default function NewLocationPage() {
                         <input className="absolute collapse" name="city" autoComplete="address-level2" />
                         <input className="absolute collapse" name="state" autoComplete="address-level2" />
                     </AddressAutofill>
-                    <InputField label="Phone Number" valueName="phone" />
+                    <InputField label="Phone Number" valueName="phoneNumber" />
                 </div>
                 <div className="flex flex-row justify-evenly w-full my-4">
                     <label><input type="checkbox" name="openPlay" />Open Play</label>

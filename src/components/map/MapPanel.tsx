@@ -48,26 +48,20 @@ export default function MapPanel() {
 
     }, [])
 
-    const selectLocation = (location: any) => {
-        console.log(location)
-        setSelectedLocation(location)
-    }
+    const selectLocation = (location: any) => setSelectedLocation(location)
 
-    return (
-        <>
-            <div className="search-view" ref={mapContainer}>
-                <div className="sticky w-fit z-10 bg-gray-700 rounded-md p-2 m-2 font-standard text-[16px]">
-                    Longitude: {lng.toFixed(2)} | Latitude: {lat.toFixed(2)} | Zoom: {zoom.toFixed(1)}
-                </div>
-
+    return (<>
+        <div className="search-view" ref={mapContainer}>
+            <div className="sticky w-fit z-10 bg-gray-700 rounded-md p-2 m-2 font-standard text-[16px]">
+                Longitude: {lng.toFixed(2)} | Latitude: {lat.toFixed(2)} | Zoom: {zoom.toFixed(1)}
             </div>
-            {map.current && locations && locations.map((loc: any) => {
-                return <MarkerElement key={loc._id} map={map.current} location={loc} isActive={false} onClick={selectLocation} />
-            }
-            )}
-            {map.current && selectedLocation && (
-                <PopupElement map={map.current} activeLocation={selectedLocation} />
-            )}
-        </>
-    )
+
+        </div>
+        {map.current && locations && locations.map((loc: any) => {
+            return <MarkerElement key={loc._id} map={map.current} location={loc} isActive={false} onClick={selectLocation} />
+        })}
+        {map.current && selectedLocation && (
+            <PopupElement map={map.current} activeLocation={selectedLocation} />
+        )}
+    </>)
 }

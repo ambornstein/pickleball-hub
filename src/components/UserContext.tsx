@@ -24,6 +24,9 @@ const UserContext = createContext<ProviderProps>(
 );
 
 export function UserProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+    const user = null
+    const token = 'eY'
+
     const login = () => {
 
     }
