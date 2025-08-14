@@ -7,6 +7,7 @@ import Link from "next/link";
 import { SubmitButton } from "../submit-location/page";
 import { FormEvent } from "react";
 import { useSnackbar } from "@/components/context/SnackbarContext";
+import { extractFormJSON } from "@/lib/utils";
 
 export default function RegisterPage() {
     const { pingWarning } = useSnackbar();
@@ -14,10 +15,8 @@ export default function RegisterPage() {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
 
-        const form = e.target;
-        const formData = new FormData(form as HTMLFormElement);
-        const formJson = Object.fromEntries(formData.entries())
-
+        const formJson = extractFormJSON(e)
+        
         if (formJson.password != formJson.confirmedPassword) {
             pingWarning("The passwords must match")
             return

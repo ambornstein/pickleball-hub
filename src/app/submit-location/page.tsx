@@ -1,27 +1,49 @@
 'use client'
 
+import { useSnackbar } from "@/components/context/SnackbarContext";
 import InputField from "@/components/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
+import { extractFormJSON } from "@/lib/utils";
+import { FormEvent, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 export function SubmitButton() {
     const { pending } = useFormStatus();
-    return (<input type="submit" className="button w-full disabled:bg-teal-100" disabled={pending}/>)
+    return (<input type="submit" className="button w-full disabled:bg-teal-100" disabled={pending} />)
 }
 
+
 export default function NewLocationPage() {
+    const [locName, setLocName] = useState('')
+
+    const { pingNotification } = useSnackbar();
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault()
+
+        const formJson = extractFormJSON(e)
+
+        fetch('api/location', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formJson)
+        }).then(res => pingNotification(`${formJson.locationName} has been submitted for review!`))
+    }
+
     return (
         <FormPageLayout>
             <h2>Submit Location</h2>
-            <form className="flex flex-col gap-4 items-center mt-4" method="post" action="/api/location">
+            <form className="flex flex-col gap-4 items-center mt-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-4">
-                    <InputField className="col-span-2" label="Location Name" valueName="locationName"></InputField>
+                    <InputField className="col-span-2" label="Location Name" valueName="locationName" updateObserver={setLocName}></InputField>
                     <InputField className="col-span-2" label="Site Link" valueName="url" type="url" />
                     {/* <AddressAutofill accessToken='pk.eyJ1IjoiYW1ib3Juc3RlaW4iLCJhIjoiY2x3ajhnYjBjMHk1cDJrbXdjZHdqaWZ3cyJ9._K7RJ6SvA6Tg2VtuZjfCig'> */}
-                        <InputField label="Address" valueName="address" autoComplete="address-line1" />
-                        <input type="hidden" name="zipcode" required={false} autoComplete="postal-code" />
-                        <input type="hidden" name="city" required={false} autoComplete="address-level2" />
-                        <input type="hidden" name="state" required={false} autoComplete="address-level2" />
+                    <InputField label="Address" valueName="address" autoComplete="address-line1" />
+                    <input type="hidden" name="zipcode" required={false} autoComplete="postal-code" />
+                    <input type="hidden" name="city" required={false} autoComplete="address-level2" />
+                    <input type="hidden" name="state" required={false} autoComplete="address-level2" />
                     {/* </AddressAutofill> */}
                     <InputField label="Phone Number" valueName="phoneNumber" type="tel" />
                 </div>

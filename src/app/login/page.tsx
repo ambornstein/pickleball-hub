@@ -8,6 +8,7 @@ import { FormPageLayout } from "@/components/layout/FormPageLayout"
 import { SubmitButton } from "../submit-location/page"
 import { useAuth } from "@/components/context/AuthContext"
 import { useSnackbar } from "@/components/context/SnackbarContext"
+import { extractFormJSON } from "@/lib/utils"
 
 export default function LoginPage() {
     const { login } = useAuth();
@@ -16,9 +17,7 @@ export default function LoginPage() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
-        const form = e.target;
-        const formData = new FormData(form as HTMLFormElement);
-        const formJson = Object.fromEntries(formData.entries())
+        const formJson = extractFormJSON(e)
 
         if (!(formJson.email && formJson.password))
             return
