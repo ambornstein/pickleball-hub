@@ -39,9 +39,8 @@ export default function PopupElement(props: PopupProps) {
                     <sub className="text-sm">{props.activeLocation.address}</sub>
                 </div>
                 <span><a href={`/location/${props.activeLocation._id}`}>View</a></span>
-            </div >,
-            contentRef.current
-        )
+            </div>,
+            contentRef.current)
         }
     </>
 }

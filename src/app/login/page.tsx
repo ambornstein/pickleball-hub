@@ -3,22 +3,32 @@
 import InputField from "@/components/InputField"
 import Link from "next/link"
 import { emailRegex, passwordRegex } from "@/lib/config"
-import { FormEvent, useState } from "react"
+import { FormEvent } from "react"
 import { FormPageLayout } from "@/components/layout/FormPageLayout"
+import { SubmitButton } from "../submit-location/page"
+import { useAuth } from "@/components/context/AuthContext"
+import { useSnackbar } from "@/components/context/SnackbarContext"
 
 export default function LoginPage() {
-    const [checkEmail, setCheckEmail] = useState(false)
-    const [checkPassword, setCheckPassword] = useState(false)
+    const { login } = useAuth();
+    const { pingWarning } = useSnackbar();
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
         const form = e.target;
         const formData = new FormData(form as HTMLFormElement);
-
         const formJson = Object.fromEntries(formData.entries())
 
-        console.log(formData);
+        if (!(formJson.email && formJson.password))
+            return
+
+        try {
+            const hold = await login(formJson.email.toString(), formJson.password.toString())
+        }
+        catch (error) {
+            pingWarning(error)
+        }
     }
 
     return (
@@ -28,11 +38,11 @@ export default function LoginPage() {
                 <InputField label="Email" type="email" valueName="email"
                     validationRegex={emailRegex}
                     enforceMessage="Please enter a valid email." />
-                <InputField label="Password" valueName="password"
+                <InputField label="Password" valueName="password" type="password"
                     validationRegex={passwordRegex}
                     enforceMessage="Please enter a password with at least 8 characters." />
                 <hr />
-                <button className="button w-full" type="submit">SUBMIT</button>
+                <SubmitButton />
             </form>
             <p className="font-sm mt-8">Don't have an account? <Link className="link" href="/register">Sign up</Link></p>
         </FormPageLayout>

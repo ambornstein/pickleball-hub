@@ -1,8 +1,9 @@
 import dbConnect from "@/lib/db"
 import User from '@/lib/models/user'
+import { hash } from '@/lib/security'
+import { handleError } from "@/lib/security";
 import { Document } from "mongoose";
 import { NextResponse } from "next/server";
-import { createHash } from "node:crypto";
 
 export async function POST(request: Request) {
     try {
@@ -10,12 +11,17 @@ export async function POST(request: Request) {
 
         await dbConnect();
 
-        const password = formData.get("password")!.toString();
+        if (!(formData.get("password") && formData.get("email") && formData.get("name"))) {
+            return new NextResponse("Credentials not fully formed for creation of new account", { status: 400 })
+        }
 
+        const password = await hash(formData.get("password")!.toString());
+
+        console.log(password)
         const user: Document = new User({
             name: formData.get("name"),
             email: formData.get("email"),
-            password: createHash(password)
+            password: password
         })
 
         await user.save()
@@ -24,12 +30,6 @@ export async function POST(request: Request) {
     }
 
     catch (error) {
-        if (error instanceof Error) {
-            return new Response(error.message, { status: 500 })
-        }
-        else {
-            return new Response("Something went wrong", { status: 500 })
-        }
-
+        handleError(error)
     }
 }

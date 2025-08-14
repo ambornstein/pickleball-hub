@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react"
-import Location from "@/lib/models/location"
-import mapboxgl, { LngLatLike } from "mapbox-gl"
+import mapboxgl from "mapbox-gl"
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MarkerElement from "./Marker";
 import PopupElement from "./Popup";

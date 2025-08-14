@@ -2,13 +2,11 @@
 
 import InputField from "@/components/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
-import dynamic from "next/dynamic";
-import { useEffect } from "react";
 import { useFormStatus } from "react-dom";
 
-function SubmitButton() {
+export function SubmitButton() {
     const { pending } = useFormStatus();
-    return (<input type="submit" className="button w-36" disabled={pending} />)
+    return (<input type="submit" className="button w-full disabled:bg-teal-100" disabled={pending}/>)
 }
 
 export default function NewLocationPage() {

@@ -1,5 +1,5 @@
 "use client"
-import { useAuth } from "./UserContext"
+import { useAuth } from "./context/AuthContext"
 
 export default function HeaderBar() {
     const { user } = useAuth();

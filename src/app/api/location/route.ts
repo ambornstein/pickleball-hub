@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
 import Location from "@/lib/models/location"
 import dbConnect from "@/lib/db";
+import { handleError } from "@/lib/security";
 
 export async function GET(request: NextRequest) {
     try {
@@ -19,12 +20,7 @@ export async function GET(request: NextRequest) {
             return Response.json(locations)
         }
     } catch (error) {
-        if (error instanceof Error) {
-            return new Response(error.message, { status: 500 })
-        }
-        else {
-            return new Response("Something went wrong", { status: 500 })
-        }
+        handleError(error);
     }
 }
 
@@ -65,11 +61,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.redirect(new URL('/search', request.url))
     }
     catch (error) {
-        if (error instanceof Error) {
-            return new Response(error.message, { status: 500 })
-        }
-        else {
-            return new Response("Something went wrong", { status: 500 })
-        }
+        handleError(error);
     }
 }

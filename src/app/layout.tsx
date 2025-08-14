@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, K2D } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/components/context/AuthContext";
+import { SnackbarProvider } from "@/components/context/SnackbarContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +33,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.3.0/web.js"></script>
-    </head>
+        <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.3.0/web.js"></script>
+      </head>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${k2d.variable} antialiased`}
       >
-        {children}
+        <SnackbarProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </SnackbarProvider>
       </body>
     </html>
   );
