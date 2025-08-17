@@ -20,11 +20,11 @@ export default function Modal({ children, isOpen, setIsOpen }: ModalProps) {
     if (!isOpen) return null
 
     return (
-        <dialog className="fixed top-0 left-0 w-full h-full center">
+        <div className="fixed top-0 left-0 w-full h-full center">
             <div onClick={close} className="w-full h-full bg-stone-800/90" />
-            <div className="flex flex-col fixed panel w-lg h-fit bg-black">
+            <div className="flex flex-col fixed panel w-lg h-fit bg-background">
                 <MdClose onClick={close} className="self-end w-fit" />
                 {children}
             </div>
-        </dialog>)
+        </div>)
 }

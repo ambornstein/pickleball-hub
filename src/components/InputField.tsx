@@ -11,14 +11,15 @@ interface InputProps {
     validationRegex?: RegExp,
     enforceMessage?: string,
     autoComplete?: string
+    initValue?: string
 }
 
 export default function InputField(props: InputProps) {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(props.initValue)
     const [check, setCheck] = useState(false)
 
     useEffect(() => {
-        if (props.updateObserver) props.updateObserver(value)
+        if (props.updateObserver && value) props.updateObserver(value)
     }, [value])
 
     return (
@@ -27,6 +28,7 @@ export default function InputField(props: InputProps) {
                 onFocus={() => setCheck(false)}
                 onChange={e => setValue(e.target.value)}
                 name={props.valueName}
+                defaultValue={props.initValue}
                 type={props.type ?? "text"} placeholder="" autoComplete={props.autoComplete}
                 className="peer text-input"></input>
             <label className="text-input-label transform transition-all origin-left
@@ -34,7 +36,7 @@ export default function InputField(props: InputProps) {
             peer-[:not(:placeholder-shown)]:-top-2.5 peer-[:not(:placeholder-shown)]:left-2.5 peer-[:not(:placeholder-shown)]:text-sm">
                 {props.label}
             </label>
-            {check && props.validationRegex && !props.validationRegex.test(value) &&
+            {check && props.validationRegex && !props.validationRegex.test(value!) &&
                 <p className="mt-4 text-red-700">{props.enforceMessage}</p>}
         </div>
     )

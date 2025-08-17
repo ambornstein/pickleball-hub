@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
 import Location from "@/lib/models/location"
 import dbConnect from "@/lib/db";
-import { handleError } from "@/lib/security";
+import { handleError } from "@/lib/utils";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
+    const { ids } = await params
     try {
         await dbConnect();
 
-        const id = request.nextUrl.searchParams.get("id")
-        if (id) {
-            const locations = await Location.findById(id);
+        if (ids) {
+            const locations = await Location.findById(ids[0]);
 
             return Response.json(locations)
         }
@@ -21,6 +21,41 @@ export async function GET(request: NextRequest) {
         }
     } catch (error) {
         handleError(error);
+    }
+}
+
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
+    const { ids } = await params
+    try {
+        await dbConnect();
+
+        const data = await request.json()
+        console.log(data)
+
+        if (ids) {
+            const res = await Location.findByIdAndUpdate(ids[0], data).exec()
+            
+            return new NextResponse("Updated " + ids[0], { status: 200 })
+        }
+        return new NextResponse("Could not update, found no id", { status: 404 })
+    }
+    catch (error) {
+        handleError(error)
+    }
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
+    const { ids } = await params
+    try {
+        await dbConnect();
+        if (ids) {
+            await Location.findByIdAndDelete(ids[0])
+            return new NextResponse("Deleted " + ids[0], { status: 200 })
+        }
+        return new NextResponse("Could not delete", { status: 404 })
+    }
+    catch (error) {
+        handleError(error)
     }
 }
 
