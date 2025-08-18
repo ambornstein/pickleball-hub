@@ -1,8 +1,8 @@
+import dbConnect from "@/lib/db";
+import { PendingLocation, Location } from "@/lib/models/location";
+import { handleError } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
-import { Location, PendingLocation } from "@/lib/models/location"
-import dbConnect from "@/lib/db";
-import { handleError } from "@/lib/utils";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
     const { ids } = await params
@@ -10,12 +10,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         await dbConnect();
 
         if (ids) {
-            const locations = await Location.findById(ids[0]);
+            const locations = await PendingLocation.findById(ids[0]);
 
             return Response.json(locations)
         }
         else {
-            const locations = await Location.find({});
+            const locations = await PendingLocation.find({});
 
             return Response.json(locations)
         }
@@ -28,43 +28,32 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     const { ids } = await params
     try {
         await dbConnect();
-
-        const data = await request.json()
-        console.log(data)
-
         if (ids) {
-            const res = await Location.findByIdAndUpdate(ids[0], {...data, name: data.locationName} ).exec()
+            const location = await PendingLocation.findById(ids[0])
 
-            return new NextResponse("Updated " + ids[0], { status: 200 })
+            const movedLocation = new Location(location?.toJSON())
+            movedLocation.save()
+
+            await PendingLocation.findByIdAndDelete(ids[0])
+            
+            return new NextResponse("Transferred location to approved" , { status: 200 })
         }
-        return new NextResponse("Could not update, found no id", { status: 404 })
+        return new NextResponse("Could not transfer", { status: 404 })
     }
     catch (error) {
         handleError(error)
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
     const { ids } = await params
-    try {
-        await dbConnect();
-        if (ids) {
-            await Location.findByIdAndDelete(ids[0])
-            return new NextResponse("Deleted " + ids[0], { status: 200 })
-        }
-        return new NextResponse("Could not delete", { status: 404 })
-    }
-    catch (error) {
-        handleError(error)
-    }
-}
-
-export async function POST(request: NextRequest) {
+    console.log(ids)
     try {
         await dbConnect();
 
         const formData = await request.formData()
         const dataObject = Object.fromEntries(formData)
+        console.log(formData)
 
         const geocodingEndpoint = new URL("https://api.mapbox.com/search/geocode/v6/forward")
 
@@ -78,7 +67,7 @@ export async function POST(request: NextRequest) {
 
         const zip = dataObject.zipcode ? dataObject.zipcode.toString() : coordJSON.features[0].properties.context.postcode.name
 
-        const location: Document = new Location({
+        const location: Document = new PendingLocation({
             coordinates: coordJSON.features[0].geometry.coordinates,
             name: dataObject.locationName,
             address: dataObject.address,
@@ -95,6 +84,22 @@ export async function POST(request: NextRequest) {
         return NextResponse.redirect(new URL('/search', request.url))
     }
     catch (error) {
+        console.error(error)
         handleError(error);
+    }
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
+    const { ids } = await params
+    try {
+        await dbConnect();
+        if (ids) {
+            await PendingLocation.findByIdAndDelete(ids[0])
+            return new NextResponse("Deleted " + ids[0], { status: 200 })
+        }
+        return new NextResponse("Could not delete", { status: 404 })
+    }
+    catch (error) {
+        handleError(error)
     }
 }

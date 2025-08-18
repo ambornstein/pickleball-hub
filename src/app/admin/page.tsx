@@ -13,13 +13,17 @@ const BooleanCell = ({ value }: { value: boolean }) => (
 
 export default function AdminPage() {
     const [locations, setLocations] = useState<Venue[]>()
+    const [stagedLocations, setStagedLocations] = useState<Venue[]>()
     const [selectedLocation, setSelectedLocation] = useState<Venue>()
 
     useEffect(() => {
         fetchLocations()
     }, [])
 
-    const fetchLocations = () => fetch('api/location').then(res => res.json()).then(data => setLocations(data))
+    const fetchLocations = () => {
+        fetch('api/location').then(res => res.json()).then(data => setLocations(data))
+        fetch('api/pending-location').then(res => res.json()).then(data => setStagedLocations(data))
+    }
 
     const deleteLocation = (index: number) => {
         const id = locations![index]._id
@@ -49,42 +53,85 @@ export default function AdminPage() {
         fetchLocations()
     }
 
+    const approvePendingLocation = (id: string)  => {
+        fetch(`api/pending-location/${id}`, {
+            method: "PATCH"
+        }).then(() => fetchLocations())
+    }
+
     return (
         <DetailPageLayout>
-            <div className="w-fit bg-slate-700">
-                <table className="border-spacing-1 border-separate
+            <div className="flex flex-col gap-4 items-center">
+                <div className="w-fit bg-slate-700">
+                    <table className="border-spacing-1 border-separate
                 [&_td]:border [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate">
-                    <caption>Existing Locations</caption>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Site</th>
-                            <th>Zipcode</th>
-                            <th>Open Play</th>
-                            <th>Reservations</th>
-                            <th>Lessons</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {locations?.map((loc, index) =>
-                            <tr key={loc._id}>
-                                <td>{loc.name}</td>
-                                <td>{loc.address}</td>
-                                <td>{loc.url}</td>
-                                <td>{loc.zipcode}</td>
-                                <BooleanCell value={loc.openPlay} />
-                                <BooleanCell value={loc.reservations} />
-                                <BooleanCell value={loc.lessons} />
-                                <td className="*:inline *:size-6">
-                                    <BiEdit onClick={() => setSelectedLocation(loc)} />
-                                    <BiTrash onClick={() => deleteLocation(index)} />
-                                </td>
+                        <caption>Existing Locations</caption>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Site</th>
+                                <th>Zipcode</th>
+                                <th>Open Play</th>
+                                <th>Reservations</th>
+                                <th>Lessons</th>
+                                <th>Actions</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {locations?.map((loc, index) =>
+                                <tr key={loc._id}>
+                                    <td>{loc.name}</td>
+                                    <td>{loc.address}</td>
+                                    <td>{loc.url}</td>
+                                    <td>{loc.zipcode}</td>
+                                    <BooleanCell value={loc.openPlay} />
+                                    <BooleanCell value={loc.reservations} />
+                                    <BooleanCell value={loc.lessons} />
+                                    <td className="*:inline *:size-6">
+                                        <BiEdit onClick={() => setSelectedLocation(loc)} />
+                                        <BiTrash onClick={() => deleteLocation(index)} />
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="w-fit bg-slate-700">
+                    <table className="border-spacing-1 border-separate
+                [&_td]:border [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate">
+                        <caption>Locations for Review</caption>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Site</th>
+                                <th>Zipcode</th>
+                                <th>Open Play</th>
+                                <th>Reservations</th>
+                                <th>Lessons</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {stagedLocations?.map((loc, index) =>
+                                <tr key={loc._id}>
+                                    <td>{loc.name}</td>
+                                    <td>{loc.address}</td>
+                                    <td>{loc.url}</td>
+                                    <td>{loc.zipcode}</td>
+                                    <BooleanCell value={loc.openPlay} />
+                                    <BooleanCell value={loc.reservations} />
+                                    <BooleanCell value={loc.lessons} />
+                                    <td className="*:inline *:size-6">
+                                        <BiCheck onClick={() => approvePendingLocation(loc._id)} />
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {selectedLocation &&

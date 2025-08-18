@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose"
 
-const LocationSchema = new mongoose.Schema({
+export const LocationSchema = new mongoose.Schema({
     coordinates: {
         type: [Number],
         required: true
@@ -9,10 +9,13 @@ const LocationSchema = new mongoose.Schema({
     address: String,
     phoneNumber: String,
     url: String,
-    zipcode: {type: Number, min: 77002, max: 77099, required: true},
+    zipcode: { type: Number, min: 77002, max: 77099, required: true },
     openPlay: Boolean,
     reservations: Boolean,
     lessons: Boolean
 })
 
-export default mongoose.models.Location || mongoose.model("Location", LocationSchema)
+const Location = mongoose.models.Location || mongoose.model("Location", LocationSchema)
+const PendingLocation = mongoose.models.PendingLocation || mongoose.model("PendingLocation", LocationSchema)
+
+export { Location, PendingLocation }

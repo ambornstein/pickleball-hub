@@ -20,13 +20,11 @@ export default function NewLocationPage() {
         e.preventDefault()
 
         const formJson = extractFormJSON(e)
+        const form = new FormData(e.target as HTMLFormElement)
 
-        fetch('api/location', {
+        fetch('api/pending-location', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formJson)
+            body: form
         }).then(res => pingNotification(`${formJson.locationName} has been submitted for review!`))
     }
 
