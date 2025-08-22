@@ -1,6 +1,4 @@
 import HeaderBar from "../HeaderBar";
-import ReviewSection from "../review/ReviewSection";
-
 
 export const DetailPageLayout = ({
     children,

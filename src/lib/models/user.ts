@@ -3,15 +3,15 @@ import mongoose, { Schema, Document } from "mongoose"
 const UserSchema: Schema = new mongoose.Schema({
     name: {
         type: String,
-        required:true
+        required: true
     },
     email: {
         type: String,
-        required:true
+        required: true
     },
     password: {
         type: String,
-        required:true
+        required: true
     }
 })
 

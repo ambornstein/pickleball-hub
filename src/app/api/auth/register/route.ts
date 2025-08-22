@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/db"
 import User from '@/lib/models/user'
 import { hash } from '@/lib/security'
-import { handleError } from "@/lib/security";
+import { handleServerError } from "@/lib/utils";
 import { Document } from "mongoose";
 import { NextResponse } from "next/server";
 
@@ -30,6 +30,6 @@ export async function POST(request: Request) {
     }
 
     catch (error) {
-        handleError(error)
+        handleServerError(error)
     }
 }

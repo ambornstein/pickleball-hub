@@ -1,6 +1,6 @@
 'use client'
 
-import InputField from "@/components/InputField"
+import InputField from "@/components/input/InputField"
 import Link from "next/link"
 import { emailRegex, passwordRegex } from "@/lib/config"
 import { FormEvent } from "react"

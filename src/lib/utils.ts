@@ -1,6 +1,6 @@
 import { FormEvent } from "react"
 
-export function handleError(error: any) {
+export function handleServerError(error: any) {
     if (error instanceof Error) {
         return new Response(error.message, { status: 500 })
     }

@@ -1,11 +1,10 @@
 'use client'
 
 import { useSnackbar } from "@/components/context/SnackbarContext";
-import InputField from "@/components/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
-import LocationForm from "@/components/LocationForm";
+import LocationForm from "@/components/input/LocationForm";
 import { extractFormJSON } from "@/lib/utils";
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import { useFormStatus } from "react-dom";
 
 export function SubmitButton() {
@@ -16,16 +15,18 @@ export function SubmitButton() {
 export default function NewLocationPage() {
     const { pingNotification } = useSnackbar();
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
         const formJson = extractFormJSON(e)
         const form = new FormData(e.target as HTMLFormElement)
 
-        fetch('api/pending-location', {
+        await fetch('api/pending-location', {
             method: 'POST',
             body: form
-        }).then(res => pingNotification(`${formJson.locationName} has been submitted for review!`))
+        })
+        
+        pingNotification(`${formJson.locationName} has been submitted for review!`)
     }
 
     return (

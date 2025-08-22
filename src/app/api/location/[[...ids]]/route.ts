@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
-import { Location, PendingLocation } from "@/lib/models/location"
+import { Location, PendingLocation , LocationSchema} from "@/lib/models/location"
 import dbConnect from "@/lib/db";
-import { handleError } from "@/lib/utils";
+import { handleServerError } from "@/lib/utils";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ ids: string[] }> }) {
     const { ids } = await params
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         await dbConnect();
 
         if (ids) {
-            const locations = await Location.findById(ids[0]);
+            const locations = await Location.findById(ids[0]).exec();
 
             return Response.json(locations)
         }
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             return Response.json(locations)
         }
     } catch (error) {
-        handleError(error);
+        handleServerError(error);
     }
 }
 
@@ -29,18 +29,19 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     try {
         await dbConnect();
 
-        const data = await request.json()
-        console.log(data)
+        let data = await request.json()
+        if (data.locationName)
+            data = { ...data, name: data.locationName }
 
         if (ids) {
-            const res = await Location.findByIdAndUpdate(ids[0], {...data, name: data.locationName} ).exec()
+            const res = await Location.findByIdAndUpdate(ids[0], data, {upsert: true}).exec()
 
             return new NextResponse("Updated " + ids[0], { status: 200 })
         }
         return new NextResponse("Could not update, found no id", { status: 404 })
     }
     catch (error) {
-        handleError(error)
+        handleServerError(error)
     }
 }
 
@@ -55,7 +56,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
         return new NextResponse("Could not delete", { status: 404 })
     }
     catch (error) {
-        handleError(error)
+        handleServerError(error)
     }
 }
 
@@ -68,7 +69,7 @@ export async function POST(request: NextRequest) {
 
         const geocodingEndpoint = new URL("https://api.mapbox.com/search/geocode/v6/forward")
 
-        geocodingEndpoint.searchParams.set("address_line1", formData.get("address")!.toString())
+        geocodingEndpoint.searchParams.set("address_line1", dataObject.address.toString())
         geocodingEndpoint.searchParams.set("place", "Houston")
         geocodingEndpoint.searchParams.set("region", "TX")
         geocodingEndpoint.searchParams.set("access_token", 'pk.eyJ1IjoiYW1ib3Juc3RlaW4iLCJhIjoiY2x3ajhnYjBjMHk1cDJrbXdjZHdqaWZ3cyJ9._K7RJ6SvA6Tg2VtuZjfCig')
@@ -92,9 +93,9 @@ export async function POST(request: NextRequest) {
 
         await location.save()
 
-        return NextResponse.redirect(new URL('/search', request.url))
+        return new NextResponse("Created location " + location._id, { status: 200 })
     }
     catch (error) {
-        handleError(error);
+        handleServerError(error);
     }
 }

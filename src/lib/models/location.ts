@@ -1,5 +1,20 @@
 import mongoose, { Schema, Document } from "mongoose"
 
+const TimeSpanSchema = new mongoose.Schema({
+    openTime: {
+        type: Number,
+        min: 1,
+        max: 24,
+        required: true
+    },
+    closeTime: {
+        type: Number,
+        min: 1,
+        max: 24,
+        required: true
+    }
+})
+
 export const LocationSchema = new mongoose.Schema({
     coordinates: {
         type: [Number],
@@ -12,7 +27,20 @@ export const LocationSchema = new mongoose.Schema({
     zipcode: { type: Number, min: 77002, max: 77099, required: true },
     openPlay: Boolean,
     reservations: Boolean,
-    lessons: Boolean
+    lessons: Boolean,
+    schedule: {
+        weekday: { type: TimeSpanSchema, required: false },
+        saturday: { type: TimeSpanSchema, required: false },
+        sunday: { type: TimeSpanSchema, required: false }
+    },
+    outdoorCourts: {
+        type: Number,
+        required: false
+    },
+    indoorCourts: {
+        type: Number,
+        required: false
+    }
 })
 
 const Location = mongoose.models.Location || mongoose.model("Location", LocationSchema)

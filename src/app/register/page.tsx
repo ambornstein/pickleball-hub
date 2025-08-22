@@ -1,6 +1,6 @@
 'use client'
 
-import InputField from "@/components/InputField";
+import InputField from "@/components/input/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
 import { emailRegex, passwordRegex } from "@/lib/config"
 import Link from "next/link";

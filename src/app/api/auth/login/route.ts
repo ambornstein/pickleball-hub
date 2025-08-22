@@ -2,7 +2,7 @@ import dbConnect from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/lib/models/user";
 import jwt from "jsonwebtoken"
-import { handleError } from "@/lib/utils";
+import { handleServerError } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
     try {
@@ -28,6 +28,6 @@ export async function POST(request: NextRequest) {
         })
     }
     catch(error) {
-        handleError(error);
+        handleServerError(error);
     }
 }

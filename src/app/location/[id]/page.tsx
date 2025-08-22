@@ -9,7 +9,7 @@ export default function LocationPage() {
     const { id } = useParams();
 
     const getLocation = async () => {
-        const loc = await fetch(`/api/location/?id=${id}`);
+        const loc = await fetch(`/api/location/${id}`);
         const data = await loc.json();
 
         console.log(data)
@@ -22,10 +22,12 @@ export default function LocationPage() {
 
     return (
         <DetailPageLayout>
-            <h3>{location?.name}</h3>
-            <p>{location?.address}</p>
-            <a className="link" href={location?.url}><p>{location?.url}</p></a>
-            <p>{location?.phoneNumber}</p>
+            <div className="block m-auto w-lg bg-amber-700 p-4">
+                <h3>{location?.name}</h3>
+                <p>{location?.address}</p>
+                <a className="link" href={location?.url}><p>{location?.url}</p></a>
+                <p>{location?.phoneNumber}</p>
+            </div>
         </DetailPageLayout>
     )
 }

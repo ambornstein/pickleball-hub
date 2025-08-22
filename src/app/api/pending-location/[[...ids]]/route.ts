@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db";
 import { PendingLocation, Location } from "@/lib/models/location";
-import { handleError } from "@/lib/utils";
+import { handleServerError } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
 
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             return Response.json(locations)
         }
     } catch (error) {
-        handleError(error);
+        handleServerError(error);
     }
 }
 
@@ -41,7 +41,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
         return new NextResponse("Could not transfer", { status: 404 })
     }
     catch (error) {
-        handleError(error)
+        handleServerError(error)
     }
 }
 
@@ -84,8 +84,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         return NextResponse.redirect(new URL('/search', request.url))
     }
     catch (error) {
-        console.error(error)
-        handleError(error);
+        handleServerError(error);
     }
 }
 
@@ -100,6 +99,6 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
         return new NextResponse("Could not delete", { status: 404 })
     }
     catch (error) {
-        handleError(error)
+        handleServerError(error)
     }
 }

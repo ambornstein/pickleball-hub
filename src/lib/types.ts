@@ -8,4 +8,25 @@ type Venue = {
     openPlay: boolean,
     reservations: boolean,
     lessons: boolean
+    schedule: Schedule
+}
+
+type Schedule = {
+    weekday?: ScheduleTime,
+    saturday?: ScheduleTime,
+    sunday?: ScheduleTime
+}
+
+type ScheduleTime = {
+    day: string,
+    openTime: number,
+    closeTime: number
+}
+
+type LocationData = {
+    name: string,
+    coordinates: [number],
+    address: string,
+    zipcode: string,
+    url: string,
 }
