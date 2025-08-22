@@ -5,7 +5,6 @@ import Link from "next/link"
 import { emailRegex, passwordRegex } from "@/lib/config"
 import { FormEvent } from "react"
 import { FormPageLayout } from "@/components/layout/FormPageLayout"
-import { SubmitButton } from "../submit-location/page"
 import { useAuth } from "@/components/context/AuthContext"
 import { useSnackbar } from "@/components/context/SnackbarContext"
 import { extractFormJSON } from "@/lib/utils"
@@ -41,7 +40,7 @@ export default function LoginPage() {
                     validationRegex={passwordRegex}
                     enforceMessage="Please enter a password with at least 8 characters." />
                 <hr />
-                <SubmitButton />
+                <input type="submit" className="button w-full"/>
             </form>
             <p className="font-sm mt-8">Don't have an account? <Link className="link" href="/register">Sign up</Link></p>
         </FormPageLayout>

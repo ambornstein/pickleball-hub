@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react"
 import InputField from "./InputField"
-import { SubmitButton } from "@/app/submit-location/page"
 
 interface LocationProps {
     location?: Venue
@@ -32,7 +31,7 @@ export default function LocationForm(props: LocationProps) {
                     <label><input type="checkbox" name="reservations" defaultChecked={reservations} value={reservations ? "true" : "false"} onChange={e => setReservations(e.target.checked)} />Reservations</label>
                     <label><input type="checkbox" name="lessons" defaultChecked={lessons} value={lessons ? "true" : "false"} onChange={e => setLessons(e.target.checked)}/>Lessons</label>
                 </div>
-                <SubmitButton />
+                <input type="submit" className="button w-full"/>
             </form>
         </>
     )

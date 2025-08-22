@@ -4,7 +4,6 @@ import InputField from "@/components/input/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
 import { emailRegex, passwordRegex } from "@/lib/config"
 import Link from "next/link";
-import { SubmitButton } from "../submit-location/page";
 import { FormEvent } from "react";
 import { useSnackbar } from "@/components/context/SnackbarContext";
 import { extractFormJSON } from "@/lib/utils";
@@ -44,7 +43,7 @@ export default function RegisterPage() {
                     enforceMessage="Please enter a password with at least 8 characters." />
                 <InputField label="Confirm Password" valueName="confirmedPassword" type="password" />
                 <hr />
-                <SubmitButton />
+                <input type="submit" className="button w-full"/>
             </form>
             <p className="font-sm mt-8">Already have an account? <Link className="link" href="/login">Log in</Link></p>
         </FormPageLayout>

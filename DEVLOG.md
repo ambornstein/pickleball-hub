@@ -5,3 +5,7 @@ I just finished the basic authentication logic, but it's very rudimentary and re
 Accounts aren't as necessary for now but the authentication system is good to have for the route protection for my admin page. Once my page is up I can start adding fields to each pickleball location like times and court counts. It will be ok if users see placeholder reviews so that they know what to expect from the finished version.
 
 At this point, I am happy about the state of the site's infrastructure, but polishing parts of UX and page content are absolutely essential going forward.
+
+Friday — 8/22/2025
+
+After a long period of procrastination, I finally implemented standard business hours as a field on each location. This is a big step towards completing the location info pages. 

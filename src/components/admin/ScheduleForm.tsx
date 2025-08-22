@@ -37,7 +37,7 @@ export default function ScheduleForm(props: ScheduleFormProps) {
                     </tr>
                 </tbody>
             </table>
-            <input type="submit"/>
+            <input type="submit" className="button w-full"/>
         </form >
     )
 }

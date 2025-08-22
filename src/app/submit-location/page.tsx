@@ -5,12 +5,6 @@ import { FormPageLayout } from "@/components/layout/FormPageLayout";
 import LocationForm from "@/components/input/LocationForm";
 import { extractFormJSON } from "@/lib/utils";
 import { FormEvent } from "react";
-import { useFormStatus } from "react-dom";
-
-export function SubmitButton() {
-    const { pending } = useFormStatus();
-    return (<input type="submit" className="button w-full disabled:bg-teal-100" disabled={pending} />)
-}
 
 export default function NewLocationPage() {
     const { pingNotification } = useSnackbar();
