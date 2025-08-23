@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from 'next-auth/providers/google'
 import { encode, decode } from 'next-auth/jwt';
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
