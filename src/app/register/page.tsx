@@ -3,10 +3,10 @@
 import InputField from "@/components/input/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
 import { emailRegex, passwordRegex } from "@/lib/config"
-import Link from "next/link";
 import { FormEvent } from "react";
 import { useSnackbar } from "@/components/context/SnackbarContext";
 import { extractFormJSON } from "@/lib/utils";
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
     const { pingWarning } = useSnackbar();
@@ -45,7 +45,7 @@ export default function RegisterPage() {
                 <hr />
                 <input type="submit" className="button w-full"/>
             </form>
-            <p className="font-sm mt-8">Already have an account? <Link className="link" href="/login">Log in</Link></p>
+            <p className="font-sm mt-8">Already have an account? <button className="link" onClick={() => signIn()}>Log in</button></p>
         </FormPageLayout>
     )
 }

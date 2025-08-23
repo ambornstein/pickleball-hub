@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         if (!user)
             return new NextResponse("No user found with email", { status: 401 })
 
-        if (creds.hashedPassword != user.password)
+        if (creds.password != user.password)
             return new NextResponse("Invalid password", { status: 401 })
 
         return NextResponse.json({
