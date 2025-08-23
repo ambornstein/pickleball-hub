@@ -79,7 +79,7 @@
   }
 
   .text-input-label {
-    @apply absolute pointer-events-none cursor-text bg-background px-1 left-2.5 top-2
+    @apply absolute pointer-events-none cursor-text bg-background px-1 left-2 top-1.5
   }
 
   .search-view {
@@ -114,7 +114,7 @@ h2 {
 }
 
 h3 {
-  @apply text-2xl
+  @apply text-xl
 }
 
 

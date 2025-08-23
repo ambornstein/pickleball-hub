@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
-import { Location, PendingLocation, LocationSchema } from "@/lib/models/location"
+import { Location } from "@/lib/models/location"
 import dbConnect from "@/lib/db";
 import { handleServerError } from "@/lib/utils";
 
@@ -48,8 +48,6 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
             lessons: Boolean(data.lessons)
         }
 
-        console.log(data)
-
         if (ids) {
             await Location.findByIdAndUpdate(ids[0], { $set: data }).exec()
 
@@ -58,7 +56,6 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
         return new NextResponse("Could not update, found no id", { status: 404 })
     }
     catch (error) {
-        console.log(error)
         handleServerError(error)
     }
 }
