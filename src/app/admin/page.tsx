@@ -8,13 +8,14 @@ import Modal from "@/components/Modal";
 import ScheduleForm from "@/components/admin/ScheduleForm";
 import { extractFormJSON } from "@/lib/utils";
 import { FormEvent, useEffect, useState } from "react";
-import { BiEdit, BiTime, BiTrash, } from "react-icons/bi";
+import { BiEdit, BiFile, BiTime, BiTrash, } from "react-icons/bi";
 
 export default function AdminPage() {
     const [locations, setLocations] = useState<Venue[]>()
     const [stagedLocations, setStagedLocations] = useState<Venue[]>()
 
     const [editingLocation, setEditingLocation] = useState<Venue>()
+    const [editingDescription, setEditingDescription] = useState<Venue>()
     const [schedulingLocation, setSchedulingLocation] = useState<Venue>()
     const [deletingLocation, setDeletingLocation] = useState<Venue>()
 
@@ -23,6 +24,7 @@ export default function AdminPage() {
 
     const clearSelections = () => {
         setEditingLocation(undefined)
+        setEditingDescription(undefined)
         setSchedulingLocation(undefined)
         setDeletingLocation(undefined)
     }
@@ -61,6 +63,19 @@ export default function AdminPage() {
         fetchLocations()
     }
 
+    const updateDescription = async (e:FormEvent) => {
+        e.preventDefault();
+        if (!editingDescription) return
+
+        await fetch(`api/location/${editingDescription._id}`, {
+            method: 'PATCH',
+            body: new FormData(e.target as HTMLFormElement)
+        })
+
+        clearSelections()
+        fetchLocations()
+    }
+
     const updateSchedule = async (e: FormEvent) => {
         e.preventDefault();
         if (!schedulingLocation) return
@@ -81,10 +96,12 @@ export default function AdminPage() {
                     openTime: Number.parseInt(formData.sunOpen.toString().slice(0, 2)),
                     closeTime: Number.parseInt(formData.sunClose.toString().slice(0, 2))
                 }
-            }
+            },
+            outdoorCourts: formData.outdoorCourts ?? -1,
+            indoorCourts: formData.indoorCourts ?? -1
         }
 
-        await fetch(`api/location/${schedulingLocation!._id}`, {
+        await fetch(`api/location/${schedulingLocation._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -120,7 +137,7 @@ export default function AdminPage() {
                                 <tr key={loc._id}>
                                     <td>{loc.name}</td>
                                     <td>{loc.address}</td>
-                                    <td>{loc.url}</td>
+                                    <td className="link"><a href={loc.url}>{loc.url}</a></td>
                                     <td>{loc.zipcode}</td>
                                     <BooleanCell value={loc.openPlay} />
                                     <BooleanCell value={loc.reservations} />
@@ -129,26 +146,34 @@ export default function AdminPage() {
                                         <BiEdit onClick={() => setEditingLocation(loc)} />
                                         <BiTrash onClick={() => setDeletingLocation(loc)} />
                                         <BiTime onClick={() => setSchedulingLocation(loc)} />
+                                        <BiFile onClick={() => setEditingDescription(loc)}/>
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
                 </div>
-
                 <ApprovalTable refreshLocations={fetchLocations} stagedLocations={stagedLocations!} />
             </div>
-
 
             {/* Edit General Location Data */}
             <Modal isOpen={editingLocation != null} setIsOpen={clearSelections}>
                 <LocationForm submitAction={updateLocation} location={editingLocation} />
             </Modal>
 
+            {/* Edit Location Description */}
+            <Modal isOpen={editingDescription != null} setIsOpen={clearSelections}>
+                <h2>Description</h2>
+                <form className="block" onSubmit={updateDescription}>
+                    <textarea className="w-full my-4 h-48 text-input " name="description" defaultValue={editingDescription?.description}/>
+                    <input className="button w-full" type="submit"/>
+                </form>
+            </Modal>
+
             {/* Edit Location Schedule */}
             <Modal isOpen={schedulingLocation != null} setIsOpen={clearSelections}>
                 {schedulingLocation &&
-                    <ScheduleForm schedule={schedulingLocation.schedule} submitAction={updateSchedule} />}
+                    <ScheduleForm schedule={schedulingLocation.schedule} submitAction={updateSchedule} outdoorCourts={schedulingLocation.outdoorCourts!} indoorCourts={schedulingLocation.indoorCourts!}/>}
             </Modal>
 
             {/* Confirm deletion of location */}
@@ -159,6 +184,7 @@ export default function AdminPage() {
                     <button className="button bg-neutral-800" onClick={clearSelections}>Cancel</button>
                 </div>
             </Modal>
+            
         </DetailPageLayout>
     )
 }

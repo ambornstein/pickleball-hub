@@ -15,6 +15,12 @@ const TimeSpanSchema = new mongoose.Schema({
     }
 })
 
+const ScheduleSchema = new mongoose.Schema({
+    weekday: { type: TimeSpanSchema, required: false },
+    saturday: { type: TimeSpanSchema, required: false },
+    sunday: { type: TimeSpanSchema, required: false }
+})
+
 export const LocationSchema = new mongoose.Schema({
     coordinates: {
         type: [Number],
@@ -28,17 +34,17 @@ export const LocationSchema = new mongoose.Schema({
     openPlay: Boolean,
     reservations: Boolean,
     lessons: Boolean,
-    schedule: {
-        weekday: { type: TimeSpanSchema, required: false },
-        saturday: { type: TimeSpanSchema, required: false },
-        sunday: { type: TimeSpanSchema, required: false }
-    },
+    schedule: { type: ScheduleSchema, required: false },
     outdoorCourts: {
         type: Number,
         required: false
     },
     indoorCourts: {
         type: Number,
+        required: false
+    },
+    description: {
+        type: String,
         required: false
     }
 })

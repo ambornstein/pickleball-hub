@@ -35,7 +35,7 @@ export default function ApprovalTable(props: ApprovalTableProps) {
                     <tr key={loc._id}>
                         <td>{loc.name}</td>
                         <td>{loc.address}</td>
-                        <td>{loc.url}</td>
+                        <td className="link"><a href={loc.url}>{loc.url}</a></td>
                         <td>{loc.zipcode}</td>
                         <BooleanCell value={loc.openPlay} />
                         <BooleanCell value={loc.reservations} />

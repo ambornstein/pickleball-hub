@@ -9,6 +9,9 @@ type Venue = {
     reservations: boolean,
     lessons: boolean
     schedule: Schedule
+    description?: string
+    outdoorCourts?: number
+    indoorCourts?: number
 }
 
 type Schedule = {

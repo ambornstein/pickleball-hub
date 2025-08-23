@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Document } from "mongoose";
-import { Location, PendingLocation , LocationSchema} from "@/lib/models/location"
+import { Location, PendingLocation, LocationSchema } from "@/lib/models/location"
 import dbConnect from "@/lib/db";
 import { handleServerError } from "@/lib/utils";
 
@@ -28,19 +28,37 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     const { ids } = await params
     try {
         await dbConnect();
+        let data: any
 
-        let data = await request.json()
+        if (request.headers.get('Content-Type')?.match('multipart/form-data')) {
+            const formData = await request.formData()
+            data = Object.fromEntries(formData);
+        }
+        else {
+            data = await request.json()
+        }
+        
         if (data.locationName)
             data = { ...data, name: data.locationName }
 
+        data = {
+            ...data,
+            openPlay: Boolean(data.openPlay),
+            reservations: Boolean(data.reservations),
+            lessons: Boolean(data.lessons)
+        }
+
+        console.log(data)
+
         if (ids) {
-            const res = await Location.findByIdAndUpdate(ids[0], data, {upsert: true}).exec()
+            await Location.findByIdAndUpdate(ids[0], { $set: data }).exec()
 
             return new NextResponse("Updated " + ids[0], { status: 200 })
         }
         return new NextResponse("Could not update, found no id", { status: 404 })
     }
     catch (error) {
+        console.log(error)
         handleServerError(error)
     }
 }

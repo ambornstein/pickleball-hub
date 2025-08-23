@@ -27,9 +27,9 @@ export default function LocationForm(props: LocationProps) {
                     <InputField label="Phone Number" valueName="phoneNumber" type="tel" initValue={props.location?.phoneNumber} />
                 </div>
                 <div className="flex flex-row justify-evenly w-full my-4">
-                    <label><input type="checkbox" name="openPlay" defaultChecked={openPlay} value={openPlay ? "true" : "false"} onChange={e => setOpenPlay(e.target.checked)}/>Open Play</label>
-                    <label><input type="checkbox" name="reservations" defaultChecked={reservations} value={reservations ? "true" : "false"} onChange={e => setReservations(e.target.checked)} />Reservations</label>
-                    <label><input type="checkbox" name="lessons" defaultChecked={lessons} value={lessons ? "true" : "false"} onChange={e => setLessons(e.target.checked)}/>Lessons</label>
+                    <label><input type="checkbox" name="openPlay" defaultChecked={openPlay} onChange={e => setOpenPlay(e.target.checked)}/>Open Play</label>
+                    <label><input type="checkbox" name="reservations" defaultChecked={reservations} onChange={e => setReservations(e.target.checked)} />Reservations</label>
+                    <label><input type="checkbox" name="lessons" defaultChecked={lessons} onChange={e => setLessons(e.target.checked)}/>Lessons</label>
                 </div>
                 <input type="submit" className="button w-full"/>
             </form>

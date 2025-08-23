@@ -2,6 +2,8 @@ import { FormEvent } from "react"
 
 interface ScheduleFormProps {
     schedule: Schedule,
+    outdoorCourts: number,
+    indoorCourts: number,
     submitAction: (e: FormEvent) => void
 }
 
@@ -11,7 +13,7 @@ export default function ScheduleForm(props: ScheduleFormProps) {
     return (
         <form onSubmit={props.submitAction}>
             <table className="border-spacing-1 border-separate
-                [&_td]:border [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate [&_td]:*:m-auto">
+                [&_td]:border [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_input]:w-[110px] [&_td]:w-[120px] [&_td]:p-1 [&_td]:truncate [&_td]:*:m-auto">
                 <thead>
                     <tr>
                         <th>Section</th>
@@ -37,7 +39,15 @@ export default function ScheduleForm(props: ScheduleFormProps) {
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" className="button w-full"/>
+            <div className="flex my-4 gap-8 w-full">
+                <label className="block w-auto">Outdoor Courts
+                    <input className="w-full text-input" name="outdoorCourts" type="number" min={0} defaultValue={props.outdoorCourts} />
+                </label>
+                <label className="block w-auto">Indoor Courts
+                    <input className="w-full text-input" name="indoorCourts" type="number" min={0} defaultValue={props.indoorCourts} />
+                </label>
+            </div>
+            <input type="submit" className="button w-full" />
         </form >
     )
 }

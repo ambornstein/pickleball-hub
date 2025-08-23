@@ -29,7 +29,6 @@
 }
 
 @layer base {
-
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -41,6 +40,10 @@
   select:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px #212 inset !important;
     -webkit-text-fill-color: #eee;
+  }
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
   }
 }
 
@@ -72,7 +75,7 @@
   }
 
   .text-input {
-    @apply w-full px-3 py-2 outline-1 border border-zinc-300 rounded-md focus:outline-none focus:border-fuchsia-600 focus:shadow shadow-sm
+    @apply w-full px-1.5 py-1.5 outline-1 outline-zinc-300 rounded-md focus:outline-fuchsia-600 focus:shadow shadow-sm
   }
 
   .text-input-label {

@@ -8,4 +8,9 @@ At this point, I am happy about the state of the site's infrastructure, but poli
 
 Friday — 8/22/2025
 
-After a long period of procrastination, I finally implemented standard business hours as a field on each location. This is a big step towards completing the location info pages. 
+After a long period of procrastination, I finally implemented standard business hours as a field on each location. This is a big step towards completing the location info pages. The location pages are extremely critical and almost at the point of completion. However, going forward, reviews for these pages is a low priority. The next highest priorities are now evident:
+
+- NextAuth authentication with multiple providers (Google especially)
+- Batch location upload
+
+After this, a lot of frontend work will be necessary, including loading indicators and input responsiveness. That is all for now. UX is important but it will be left for last until all of the functionality is in place.
