@@ -28,10 +28,11 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children, session
+  children
 }: Readonly<{
-  children: React.ReactNode, session: Session | null;
+  children: React.ReactNode
 }>) {
+  const session = await getSession();
 
   return (
     <html lang="en">
@@ -43,7 +44,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${k2d.variable} antialiased`}
       >
         <SnackbarProvider>
-          <NextAuthProvider session={session}>
+          <NextAuthProvider>
             {children}
           </NextAuthProvider>
         </SnackbarProvider>
