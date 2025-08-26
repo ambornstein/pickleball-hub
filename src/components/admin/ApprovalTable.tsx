@@ -20,7 +20,7 @@ export default function ApprovalTable(props: ApprovalTableProps) {
             <caption>Locations for Review</caption>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Location Name</th>
                     <th>Address</th>
                     <th>Site</th>
                     <th>Zipcode</th>

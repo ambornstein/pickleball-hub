@@ -53,7 +53,6 @@ const authOptions: NextAuthOptions = {
             }
         },
         async jwt({ token, user }) {
-            console.log(token)
             if (user) {
                 return { ...token, ...user }
             }

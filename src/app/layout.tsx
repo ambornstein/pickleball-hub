@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, K2D } from "next/font/google";
 import "./globals.css";
 import { SnackbarProvider } from "@/components/context/SnackbarContext";
-import { getSession, SessionProvider } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import NextAuthProvider from "@/components/context/NextAuthProvider";
-import { Session } from "next-auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +31,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const session = await getSession();
 
   return (
     <html lang="en">
