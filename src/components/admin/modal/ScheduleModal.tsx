@@ -47,7 +47,7 @@ export default function ScheduleModal(props: AdminEditModalProps) {
         props.fetchLocations()
     }
 
-    if (!props.editingLocation?.schedule) return null
+    if (!props.editingLocation) return null
     else
         return (
             <Modal isOpen={!!props.editingLocation} setIsOpen={props.clearSelection}>
@@ -64,8 +64,8 @@ export default function ScheduleModal(props: AdminEditModalProps) {
                         <tbody>
                             <tr>
                                 <td>Weekday</td>
-                                <td><input type="time" name="weekOpen" step={3600} defaultValue={intToHour(props.editingLocation.schedule.weekday?.openTime ?? 0)} /></td>
-                                <td><input type="time" name="weekClose" step={3600} defaultValue={intToHour(props.editingLocation.schedule.weekday?.closeTime ?? 0)} /></td>
+                                <td><input type="time" name="weekOpen" step={3600} defaultValue={intToHour(props.editingLocation.schedule?.weekday?.openTime ?? 0)} /></td>
+                                <td><input type="time" name="weekClose" step={3600} defaultValue={intToHour(props.editingLocation.schedule?.weekday?.closeTime ?? 0)} /></td>
                             </tr>
                             <tr>
                                 <td>Saturday</td>

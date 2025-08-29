@@ -33,3 +33,10 @@ type LocationData = {
     zipcode: string,
     url: string,
 }
+
+type PermissionGrant = {
+    email: string,
+    role: string,
+    managedLocations: string[]
+    _id: string
+}

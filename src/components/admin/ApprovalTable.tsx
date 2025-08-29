@@ -8,16 +8,18 @@ interface ApprovalTableProps {
 
 export default function ApprovalTable(props: ApprovalTableProps) {
 
-    const approvePendingLocation = (id: string) => {
-        fetch(`api/pending-location/${id}`, {
+    const approvePendingLocation = async (id: string) => {
+        await fetch(`api/pending-location/${id}`, {
             method: "PATCH"
-        }).then(() => props.refreshLocations())
+        })
+
+        props.refreshLocations()
     }
 
-    return (<div className="w-fit bg-slate-700">
-        <table className="border-spacing-1 border-separate
-                [&_td]:border [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate">
-            <caption>Locations for Review</caption>
+    return (<div className="w-fit bg-slate-800">
+        <table className="border-spacing-1 w-4xl
+                [&_td]:border-y [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate">
+            <caption className="text-xl mb-4">Locations for Review</caption>
             <thead>
                 <tr>
                     <th>Location Name</th>
@@ -40,7 +42,7 @@ export default function ApprovalTable(props: ApprovalTableProps) {
                         <BooleanCell value={loc.openPlay} />
                         <BooleanCell value={loc.reservations} />
                         <BooleanCell value={loc.lessons} />
-                        <td className="*:inline *:size-6">
+                        <td className="*:inline *:size-6 *:m-auto">
                             <BiCheck onClick={() => approvePendingLocation(loc._id)} />
                         </td>
                     </tr>

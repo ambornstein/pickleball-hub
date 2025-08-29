@@ -7,6 +7,7 @@ export default function DeleteModal(props: AdminEditModalProps) {
         await fetch(`api/location/${props.editingLocation._id}`, { method: "DELETE" })
 
         props.fetchLocations()
+        props.clearSelection()
     }
 
     return (

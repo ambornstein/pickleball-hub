@@ -3,7 +3,7 @@ import HeaderBar from "../HeaderBar";
 export const DetailPageLayout = ({
     children,
 }: Readonly<{ children: React.ReactNode; }>) => <>
-        <div className="min-h-screen font-standard">
+        <div className="min-h-screen font-standard h-fit">
             <HeaderBar />
             <main className="flex justify-center px-10 lg:px-0">
                 {children}

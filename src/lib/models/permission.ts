@@ -1,8 +1,8 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const PermissionSchema: Schema = new mongoose.Schema({
     email: String,
-    type: { enum: ['User', 'Admin', 'Editor'] },
+    role: String,
     managedLocations: [{ type: Schema.Types.ObjectId, ref: 'Location'}]
 })
 
