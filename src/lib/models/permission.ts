@@ -1,4 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import { Location } from '@/lib/models/location'
+
+const locationSchema = Location;
 
 const PermissionSchema: Schema = new mongoose.Schema({
     email: String,

@@ -12,6 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
         return NextResponse.json(roleEntries)
     } catch (error) {
+        console.log(error)
         handleServerError(error);
     }
 }
