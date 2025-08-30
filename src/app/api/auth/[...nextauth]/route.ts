@@ -21,7 +21,7 @@ const authOptions: NextAuthOptions = {
                     password: hashedPassword
                 }
 
-                const response = await fetch('http://localhost:3000/api/auth/login', {
+                const response = await fetch(process.env.NEXTAUTH_URL + '/api/auth/login', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json"
@@ -43,8 +43,8 @@ const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
-        async session({ session, token}) {
-            const grant = await fetch('http://localhost:3000/api/permissions/' + token.email)
+        async session({ session, token }) {
+            const grant = await fetch(process.env.NEXTAUTH_URL + '/api/permissions/' + token.email)
             const perm = await grant.json()
 
             token.role = perm.role ?? 'User'
