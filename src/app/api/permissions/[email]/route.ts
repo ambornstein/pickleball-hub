@@ -3,13 +3,12 @@ import Permission from "@/lib/models/permission"
 import { handleServerError } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params
+export async function GET(request: NextRequest, { params }: { params: Promise<{ email: string }> }) {
+    const { email } = await params
     try {
         await dbConnect();
 
-        const roleEntries = await Permission.find({ _id: id }).populate('managedLocations', 'name')
-        console.log(roleEntries)
+        const roleEntries = await Permission.findOne({ email: email }).populate('managedLocations', 'name')
 
         return NextResponse.json(roleEntries)
     } catch (error) {
@@ -17,8 +16,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ email: string }> }) {
+    const { email } = await params
     try {
         await dbConnect();
 
@@ -36,22 +35,22 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
             data = await request.json()
         }
 
-        await Permission.findByIdAndUpdate(id, { $set: data }).exec()
+        await Permission.findOneAndUpdate({email: email}, { $set: data }).exec()
 
-        return new NextResponse("Updated " + id, { status: 200 })
+        return new NextResponse("Updated permissions of" + email, { status: 200 })
     } catch (error) {
         handleServerError(error);
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ email: string }> }) {
+    const { email } = await params;
     try {
         await dbConnect();
 
-        await Permission.findByIdAndDelete(id).exec()
+        await Permission.findOneAndDelete({email: email}).exec()
 
-        return new NextResponse("Deleted permission " + id, { status: 200 })
+        return new NextResponse("Deleted permission " + email, { status: 200 })
     }
     catch (error) {
         console.log(error)

@@ -39,16 +39,21 @@ const authOptions: NextAuthOptions = {
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         })
     ],
     callbacks: {
-        async session({ session, token }) {
+        async session({ session, token}) {
+            const grant = await fetch('http://localhost:3000/api/permissions/' + token.email)
+            const perm = await grant.json()
+
+            token.role = perm.role ?? 'User'
             return {
                 ...session, user: {
                     ...session.user,
                     id: token.sub,
-                    items: token.items
+                    items: token.items,
+                    role: perm.role ?? 'User'
                 }
             }
         },

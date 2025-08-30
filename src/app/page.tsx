@@ -12,7 +12,7 @@ export default function Home() {
         <div className="grid grid-rows-[min-content_auto_min-content] gap-y-4 min-h-[85vh] justify-center">
           <LinkScroll />
           <div className="w-full flex justify-center">
-            <div className="w-[80vw] grid grid-cols-1 gap-4 items-center   lg:max-w-[50%]
+            <div className="w-[80vw] grid grid-cols-1 gap-4 items-center lg:max-w-[50%]
               xl:grid-cols-2 xl:px-28 xl:gap-12 xl:max-w-[80%]">
               <div className="grid grid-rows-2 grid-cols-[32%_auto] aspect-[3/2] gap-4">
                 <a href="/search" className="flex-col row-span-2 panel-link rounded-s-3xl">

@@ -71,7 +71,7 @@
   }
 
   .button {
-    @apply text-sm lg:text-lg h-fit font-bold italic border-2 py-1 px-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600;
+    @apply text-sm lg:text-lg h-fit font-bold italic border-2 py-1 px-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600 cursor-pointer;
   }
 
   .text-input {
@@ -117,6 +117,9 @@ h3 {
   @apply text-xl
 }
 
+button {
+  @apply cursor-pointer
+}
 
 /* Animation */
 

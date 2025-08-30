@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
         if (request.headers.get('Content-Type')?.match('multipart/form-data')) {
             const formData = await request.formData()
             dataObject = Object.fromEntries(formData)
-            
         }
         else {
             dataObject = await request.json()

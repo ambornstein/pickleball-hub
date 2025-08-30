@@ -21,8 +21,8 @@ export default function AdminPermissionTable(props: PermissionTableProps) {
         fetchPermissions();
     }, [])
 
-    const deletePermissionGrant = async (id: string) =>
-        fetch(`api/permissions/${id}`, { method: 'DELETE' })
+    const deletePermissionGrant = async (email: string) =>
+        fetch(`api/permissions/${email}`, { method: 'DELETE' })
 
     return (
         <div className="bg-slate-800">
@@ -36,7 +36,7 @@ export default function AdminPermissionTable(props: PermissionTableProps) {
                 </thead>
                 <tbody>
                     {permissionEntries?.map((perm) =>
-                        <tr className={`${perm == selectedGrant ? 'bg-blue-800' : ''}`} key={perm._id} onClick={() => setSelectedGrant(perm)}>
+                        <tr className={`cursor-pointer ${perm == selectedGrant ? 'bg-blue-800' : ''}`} key={perm._id} onClick={() => setSelectedGrant(perm)}>
                             <td>{perm.email}</td>
                             <td>{perm.role}</td>
                             <td>{perm.managedLocations.map((loc: any) => loc.name).join(', ')}</td>
@@ -46,14 +46,14 @@ export default function AdminPermissionTable(props: PermissionTableProps) {
             </table>
             <div className="max-w-full h-12 m-2 p-1 flex items-center gap-2 bg-slate-700 ">
                 {selectedGrant && <>
-                    <button className="button" onClick={() => setSelectedGrant(undefined)}>Unselect</button>
-                    <BiEdit className="size-8" onClick={() => setModalOpen(true)} />
-                    <BiTrash className="size-8" onClick={() => deletePermissionGrant(selectedGrant._id).then(() => {
+                    <button className="button cursor-pointer" onClick={() => setSelectedGrant(undefined)}>Unselect</button>
+                    <BiEdit className="size-8 cursor-pointer" onClick={() => setModalOpen(true)} />
+                    <BiTrash className="size-8 cursor-pointer" onClick={() => deletePermissionGrant(selectedGrant.email).then(() => {
                         fetchPermissions()
                         setSelectedGrant(undefined)
                     })} />
                 </>}
-                <BiPlus className="ml-auto size-8" onClick={() => {
+                <BiPlus className="ml-auto size-8 cursor-pointer" onClick={() => {
                     setSelectedGrant(undefined)
                     setModalOpen(true)
                 }} />

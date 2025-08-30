@@ -110,11 +110,11 @@ export default function AdminPage() {
                 <ApprovalTable refreshLocations={refreshLocations} stagedLocations={stagedLocations!} />
 
                 <div className="w-4xl gap-12 bg-slate-800 p-4">
-                    <div className="m-auto">
+                    <div className="m-auto space-y-2">
                         <h3>Spreadsheet File Upload</h3>
                         <input onChange={(e) => setFile(e.target.files![0])} className="block file:rounded-md file:border-0 file:bg-fuchsia-800 file:px-2 file:py-1" type="file"
                             accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-                        <button className="block" onClick={() => submitBatch()}>Submit</button>
+                        <button className="block button" onClick={submitBatch}>Submit</button>
                         <a href="location-sheet.csv" download={true} className="link">Download Blank Sheet</a>
                     </div>
                     <ColumnNameTable />
