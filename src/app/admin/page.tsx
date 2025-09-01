@@ -12,7 +12,6 @@ import ColumnNameTable from "@/components/admin/ColumnNameTable";
 import AdminPermissionTable from "@/components/admin/AdminPermissionTable";
 import Papa from 'papaparse';
 
-
 export interface AdminEditModalProps {
     editingLocation?: Venue
     clearSelection: () => void
