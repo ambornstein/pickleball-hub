@@ -2,7 +2,7 @@ import FoldingButton from "./FoldingButton"
 
 export default function FilterSidebar() {
     return (
-        <div className="flex flex-row-reverse lg:col-start-1 lg:relative fixed justify-end z-30 h-[70vh] mt-32 lg:mt-0">
+        <div className="flex flex-row-reverse lg:relative fixed justify-end z-30 h-[70vh] mt-12 lg:mt-0">
             <FoldingButton orientation="left"/>
 
             <div className="w-xs max-w-[80vw] bg-slate-800 peer-[:has(:checked)]:w-0 overflow-hidden transition-all duration-500 rounded-s-2xl z-100">

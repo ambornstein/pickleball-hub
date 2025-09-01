@@ -14,3 +14,13 @@ After a long period of procrastination, I finally implemented standard business 
 - Batch location upload
 
 After this, a lot of frontend work will be necessary, including loading indicators and input responsiveness. That is all for now. UX is important but it will be left for last until all of the functionality is in place.
+
+Saturday — 8/30/2025
+
+I finished batch uploads, the admin permission table, and admin page protection based on user roles. I also just got authentication to work in production. So essentially the backend is totally done for now because I'm not adding any extra features like reviews, image uploads, or account customization yet. What is already up can quickly be improved to have better UX so that the first users can have an impression of a more polished product. It will stop them from being distracted by annoying UX stuff and instead give more feedback as to requirements and features they will actually want.
+
+Sunday — 8/31/2025
+
+I didnt finish my log entry yesterday :\. I did manage to improve some frontend things though. The most noticeable is the new background. I think it helps the site look more appealing and less sterile. Apart from that, I honestly can't count the amount of small frontend things that should be fixed. Most important is definitely mobile optimization. However, between trying to figure out how to do loaders and skeletons, my brain is cooked.
+
+I also forgot to commit the changes yesterday. This commit is actually kind of hefty.

@@ -1,6 +1,5 @@
 'use client'
 
-import { DetailPageLayout } from "@/components/layout/DetailPageLayout";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -37,55 +36,54 @@ export default function LocationPage() {
         getLocation()
     }, [])
 
+    if (!location) return null
     return (
-        <DetailPageLayout>
-            <div className="px-4 py-2 flex flex-col gap-4 bg-stone-600 w-2xl">
-                <div className="m-auto w-lg">
-                    <div className="flex justify-around">
-                        <Image src="/globe.svg" height={100} width={100} alt="placeholder" />
-                        <div>
-                            <h2>{location?.name}</h2>
-                            <a className="link" href={location?.url}><p>{location?.url}</p></a>
-                            <p>{location?.address}, {location?.zipcode}</p>
-                            <p>{location?.phoneNumber}</p>
-                        </div>
-                    </div>
-                    <hr className="my-4" />
-                    <p>{location?.description}</p>
-                </div>
-                <div className="m-auto flex gap-4 mt-4 *:rounded-md *:bg-stone-700 *:p-4">
-                    <div className="flex flex-col items-center">
-                        <h3>Outdoor Courts</h3>
-                        <p>{location?.outdoorCourts ?? '???'}</p>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <h3>Indoor Courts</h3>
-                        <p>{location?.indoorCourts ?? '???'}</p>
+        <div className="m-auto px-4 py-2 flex flex-col gap-4 bg-stone-600 w-2xl">
+            <div className="m-auto w-lg">
+                <div className="flex justify-around">
+                    <Image src="/globe.svg" height={100} width={100} alt="placeholder" />
+                    <div>
+                        <h2>{location?.name}</h2>
+                        <a className="link" href={location?.url}><p>{location?.url}</p></a>
+                        <p>{location?.address}, {location?.zipcode}</p>
+                        <p>{location?.phoneNumber}</p>
                     </div>
                 </div>
-                <div className="m-auto flex gap-4 w-fit justify-around *:rounded-md *:bg-stone-700 *:p-4">
-                    <div>
-                        <h3>Weekday</h3>
-                        {location?.schedule.weekday &&
-                            <p>{`${convertTime(location!.schedule.weekday!.openTime)} — ${convertTime(location!.schedule.weekday!.closeTime)}`}</p>}
-                    </div>
-                    <div>
-                        <h3>Saturday</h3>
-                        {location?.schedule.saturday &&
-                            <p>{`${convertTime(location!.schedule.saturday!.openTime)} — ${convertTime(location!.schedule.saturday!.closeTime)}`}</p>}
-                    </div>
-                    <div>
-                        <h3>Sunday</h3>
-                        {location?.schedule.sunday &&
-                            <p>{`${convertTime(location!.schedule.sunday!.openTime)} — ${convertTime(location!.schedule.sunday!.closeTime)}`}</p>}
-                    </div>
+                <hr className="my-4" />
+                <p>{location?.description}</p>
+            </div>
+            <div className="m-auto flex gap-4 mt-4 *:rounded-md *:bg-stone-700 *:p-4">
+                <div className="flex flex-col items-center">
+                    <h3>Outdoor Courts</h3>
+                    <p>{location?.outdoorCourts ?? '???'}</p>
                 </div>
-                <div className="m-auto flex gap-4 *:rounded-md *:p-4">
-                    <BooleanChip label="Open Play" boolValue={location?.openPlay!} />
-                    <BooleanChip label="Lessons" boolValue={location?.lessons!} />
-                    <BooleanChip label="Reservations" boolValue={location?.reservations!} />
+                <div className="flex flex-col items-center">
+                    <h3>Indoor Courts</h3>
+                    <p>{location?.indoorCourts ?? '???'}</p>
                 </div>
             </div>
-        </DetailPageLayout>
+            <div className="m-auto flex gap-4 w-fit justify-around *:rounded-md *:bg-stone-700 *:p-4">
+                <div>
+                    <h3>Weekday</h3>
+                    {location?.schedule.weekday &&
+                        <p>{`${convertTime(location!.schedule.weekday!.openTime)} — ${convertTime(location!.schedule.weekday!.closeTime)}`}</p>}
+                </div>
+                <div>
+                    <h3>Saturday</h3>
+                    {location?.schedule.saturday &&
+                        <p>{`${convertTime(location!.schedule.saturday!.openTime)} — ${convertTime(location!.schedule.saturday!.closeTime)}`}</p>}
+                </div>
+                <div>
+                    <h3>Sunday</h3>
+                    {location?.schedule.sunday &&
+                        <p>{`${convertTime(location!.schedule.sunday!.openTime)} — ${convertTime(location!.schedule.sunday!.closeTime)}`}</p>}
+                </div>
+            </div>
+            <div className="m-auto flex gap-4 *:rounded-md *:p-4">
+                <BooleanChip label="Open Play" boolValue={location?.openPlay!} />
+                <BooleanChip label="Lessons" boolValue={location?.lessons!} />
+                <BooleanChip label="Reservations" boolValue={location?.reservations!} />
+            </div>
+        </div>
     )
 }

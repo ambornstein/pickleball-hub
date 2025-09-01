@@ -6,22 +6,15 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import MarkerElement from "./Marker";
 import PopupElement from "./Popup";
 
-export default function MapPanel() {
+export default function MapPanel(props: { locations: Venue[] }) {
     const mapContainer = useRef<any>(null)
     const map = useRef<mapboxgl.Map | null>(null)
-    const [locations, setLocations] = useState([])
-    const [selectedLocation, setSelectedLocation] = useState<any>()
+
+    const [selectedLocation, setSelectedLocation] = useState<Venue>()
 
     const [lng, setLng] = useState(-95.3321);
     const [lat, setLat] = useState(29.77);
     const [zoom, setZoom] = useState(9.5);
-
-    const getLocations = async () => {
-        const loc = await fetch('/api/location');
-        const json = await loc.json();
-
-        setLocations(json);
-    }
 
     useEffect(() => {
         const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -41,8 +34,6 @@ export default function MapPanel() {
             setZoom(map.current!.getZoom());
         });
 
-        getLocations()
-
         return () => { map.current?.remove() }
 
     }, [])
@@ -51,12 +42,11 @@ export default function MapPanel() {
 
     return (<>
         <div className="search-view" ref={mapContainer}>
-            <div className="sticky w-fit z-10 bg-gray-700 rounded-md p-2 m-2 font-standard text-[16px]">
+            <div className="sticky w-fit z-10 bg-gray-700 rounded-md p-2 m-2 font-standard text-[12px] md:text-[16px]">
                 Longitude: {lng.toFixed(2)} | Latitude: {lat.toFixed(2)} | Zoom: {zoom.toFixed(1)}
             </div>
-
         </div>
-        {map.current && locations && locations.map((loc: any) => {
+        {map.current && props.locations.map((loc: any) => {
             return <MarkerElement key={loc._id} map={map.current} location={loc} isActive={false} onClick={selectLocation} />
         })}
         {map.current && selectedLocation && (

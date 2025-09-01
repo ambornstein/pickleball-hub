@@ -66,8 +66,16 @@
 }
 
 @layer utilities {
+  .icon {
+    @apply size-8 cursor-pointer
+  }
+
+  .panel-icon {
+    @apply lg:size-14 size-6 
+  }
+
   .panel-link {
-    @apply flex bg-slate-700 text-center items-center justify-center text-2xl gap-4 hover:bg-slate-500
+    @apply flex bg-slate-700 text-center items-center justify-center text-lg lg:text-2xl gap-4 hover:bg-slate-500
   }
 
   .button {
@@ -106,7 +114,7 @@ body {
 }
 
 h1 {
-  @apply lg:text-4xl text-2xl text-center
+  @apply lg:text-3xl text-lg text-center
 }
 
 h2 {

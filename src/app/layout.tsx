@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, K2D } from "next/font/google";
 import "./globals.css";
 import { SnackbarProvider } from "@/components/context/SnackbarContext";
-import { getSession } from "next-auth/react";
 import NextAuthProvider from "@/components/context/NextAuthProvider";
+import HeaderBar from "@/components/HeaderBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +43,10 @@ export default async function RootLayout({
       >
         <SnackbarProvider>
           <NextAuthProvider>
-            {children}
+            <div className="min-h-screen font-standard h-fit bg-[url('/pickle-vector-tesselation.png')] bg-repeat lg:bg-size-[30vw] bg-size-[100vw] ">
+              <HeaderBar />
+              {children}
+            </div>
           </NextAuthProvider>
         </SnackbarProvider>
       </body>

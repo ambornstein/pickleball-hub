@@ -46,14 +46,14 @@ export default function AdminPermissionTable(props: PermissionTableProps) {
             </table>
             <div className="max-w-full h-12 m-2 p-1 flex items-center gap-2 bg-slate-700 ">
                 {selectedGrant && <>
-                    <button className="button cursor-pointer" onClick={() => setSelectedGrant(undefined)}>Unselect</button>
-                    <BiEdit className="size-8 cursor-pointer" onClick={() => setModalOpen(true)} />
-                    <BiTrash className="size-8 cursor-pointer" onClick={() => deletePermissionGrant(selectedGrant.email).then(() => {
+                    <button className="button" onClick={() => setSelectedGrant(undefined)}>Unselect</button>
+                    <BiEdit className="icon" onClick={() => setModalOpen(true)} />
+                    <BiTrash className="icon" onClick={() => deletePermissionGrant(selectedGrant.email).then(() => {
                         fetchPermissions()
                         setSelectedGrant(undefined)
                     })} />
                 </>}
-                <BiPlus className="ml-auto size-8 cursor-pointer" onClick={() => {
+                <BiPlus className="ml-auto icon" onClick={() => {
                     setSelectedGrant(undefined)
                     setModalOpen(true)
                 }} />
