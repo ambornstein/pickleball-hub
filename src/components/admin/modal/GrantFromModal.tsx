@@ -1,3 +1,6 @@
+'use client'
+
+import { useStatus } from "@/components/context/StatusContext"
 import Modal from "@/components/Modal"
 import { FormEvent } from "react"
 
@@ -10,14 +13,17 @@ interface GrantFormProps {
 }
 
 export default function GrantFormModal(props: GrantFormProps) {
+    const {startLoading, endLoading } = useStatus();
 
     const submitForm = async (e: FormEvent)  => {
         e.preventDefault()
 
+        startLoading()
         await fetch(`api/permissions/${props.editGrant?.email ?? ''}`, {
             method: !!props.editGrant ? 'PATCH' :'POST',
             body: new FormData(e.target as HTMLFormElement)
         })
+        endLoading()
 
         props.setModalOpen(false)
         props.fetchPermissions()

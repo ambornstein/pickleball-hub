@@ -4,14 +4,14 @@ import InputField from "@/components/input/InputField";
 import { FormPageLayout } from "@/components/layout/FormPageLayout";
 import { emailRegex, passwordRegex } from "@/lib/config"
 import { FormEvent } from "react";
-import { useSnackbar } from "@/components/context/SnackbarContext";
+import { useStatus} from "@/components/context/StatusContext";
 import { extractFormJSON } from "@/lib/utils";
 import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
-    const { pingWarning } = useSnackbar();
+    const { pingWarning, startLoading, endLoading } = useStatus();
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
         const formJson = extractFormJSON(e)
@@ -21,13 +21,15 @@ export default function RegisterPage() {
             return
         }
 
-        fetch('api/auth/register', { 
+        startLoading()
+        await fetch('api/auth/register', { 
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(formJson)
         })
+        endLoading()
     }
 
     return (

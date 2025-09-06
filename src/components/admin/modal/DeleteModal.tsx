@@ -1,10 +1,17 @@
+'use client'
+
 import { AdminEditModalProps } from "@/app/admin/page";
+import { useStatus } from "@/components/context/StatusContext";
 import Modal from "@/components/Modal";
 
 export default function DeleteModal(props: AdminEditModalProps) {
+    const { startLoading, endLoading } = useStatus();
     const deleteLocation = async () => {
         if (!props.editingLocation) return
+
+        startLoading()
         await fetch(`api/location/${props.editingLocation._id}`, { method: "DELETE" })
+        endLoading()
 
         props.fetchLocations()
         props.clearSelection()

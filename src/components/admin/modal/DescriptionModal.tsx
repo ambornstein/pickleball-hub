@@ -1,9 +1,11 @@
 import { AdminEditModalProps } from "@/app/admin/page";
+import { useStatus } from "@/components/context/StatusContext";
 import Modal from "@/components/Modal";
 import { extractFormJSON } from "@/lib/utils";
 import { FormEvent } from "react";
 
 export default function DescriptionModal(props: AdminEditModalProps) {
+    const {startLoading, endLoading } = useStatus();
 
     const updateDescription = async (e: FormEvent) => {
         e.preventDefault();
@@ -18,10 +20,12 @@ export default function DescriptionModal(props: AdminEditModalProps) {
             lessons: props.editingLocation.lessons
         }
 
+        startLoading()
         await fetch(`api/location/${props.editingLocation._id}`, {
             method: 'PATCH',
             body: JSON.stringify(data)
         })
+        endLoading()
 
         props.clearSelection()
         props.fetchLocations()

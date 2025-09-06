@@ -1,6 +1,7 @@
 import mapboxgl, { Popup } from "mapbox-gl"
 import { useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
+import { MdOutlineArrowCircleRight } from "react-icons/md"
 
 interface PopupProps {
     activeLocation: any,
@@ -16,7 +17,7 @@ export default function PopupElement(props: PopupProps) {
 
         popupRef.current = new mapboxgl.Popup({
             closeOnClick: false,
-            offset: 20
+            offset: 20,
         })
 
         return () => { popupRef.current!.remove() }
@@ -33,12 +34,17 @@ export default function PopupElement(props: PopupProps) {
 
     return <>
         {createPortal(
-            <div className="text-[16px] font-standard p-2 flex flex-row items-center">
+            <div className="text-[16px] font-standard p-1 flex flex-row gap-4 items-center">
                 <div className="flex flex-col">
                     <span>{props.activeLocation.name}</span>
-                    <sub className="text-sm">{props.activeLocation.address}</sub>
+                    <span className="text-[12px]">{props.activeLocation.address}</span>
                 </div>
-                <span><a href={`/location/${props.activeLocation._id}`}>View</a></span>
+                <a href={`/location/${props.activeLocation._id}`}>
+                <div className="flex flex-col items-center">
+                    <MdOutlineArrowCircleRight className="size-6"/>
+                    <span className="text-[12px] leading-4">More Info</span>
+                </div>
+                </a>
             </div>,
             contentRef.current)
         }

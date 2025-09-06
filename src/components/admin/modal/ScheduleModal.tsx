@@ -1,11 +1,15 @@
+'use client'
+
 import { FormEvent } from "react"
 import Modal from "../../Modal"
 import { extractFormJSON } from "@/lib/utils"
 import { AdminEditModalProps } from "@/app/admin/page"
+import { useStatus } from "@/components/context/StatusContext"
 
 const intToHour = (hour: number) => `${("00" + hour).slice(-2)}:00`
 
 export default function ScheduleModal(props: AdminEditModalProps) {
+    const {startLoading, endLoading } = useStatus();
 
     const updateSchedule = async (e: FormEvent) => {
         e.preventDefault();
@@ -35,6 +39,7 @@ export default function ScheduleModal(props: AdminEditModalProps) {
             lessons: props.editingLocation.lessons
         }
 
+        startLoading()
         await fetch(`api/location/${props.editingLocation._id}`, {
             method: "PATCH",
             headers: {
@@ -42,6 +47,7 @@ export default function ScheduleModal(props: AdminEditModalProps) {
             },
             body: JSON.stringify(data)
         })
+        endLoading()
 
         props.clearSelection()
         props.fetchLocations()

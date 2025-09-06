@@ -15,13 +15,15 @@ export default function MarkerElement(props: MarkerProps) {
     const markerRef = useRef<Marker>(null);
     const contentRef = useRef(document.createElement('div'));
 
-    markerRef.current = new mapboxgl.Marker(contentRef.current)
+    useEffect(() => {
+        markerRef.current = new mapboxgl.Marker(contentRef.current)
             .setLngLat(props.location.coordinates)
             .addTo(props.map);
-            
+    }, [])
+
     return (<>
         {createPortal(
-            <div className="bg-background p-2 rounded-md text-[16px] font-standard" onClick={() => props.onClick(props.location)}>
+            <div className="bg-background py-0.5 px-1 rounded-md text-[14px] tracking-tight font-standard" onClick={() => props.onClick(props.location)}>
                 {props.location.name}
             </div>,
             contentRef.current

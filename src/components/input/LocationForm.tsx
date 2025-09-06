@@ -26,13 +26,13 @@ export default function LocationForm(props: LocationProps) {
                     {/* </AddressAutofill> */}
                     <InputField label="Phone Number" valueName="phoneNumber" type="tel" initValue={props.location?.phoneNumber} />
                 </div>
-                <div className="flex flex-row justify-evenly w-full my-4">
+                <div className="flex flex-col gap-2 w-full my-4">
                     <label className="flex justify-center gap-1">
                         <input type="checkbox" name="openPlay" defaultChecked={openPlay} onChange={e => setOpenPlay(e.target.checked)} />
                         Open Play
                     </label>
                     <label className="flex justify-center gap-1">
-                        <input type="checkbox" name="reservations" defaultChecked={reservations} onChange={e => setReservations(e.target.checked)} />
+                        <input type="checkbox" className="flex" name="reservations" defaultChecked={reservations} onChange={e => setReservations(e.target.checked)} />
                         Reservations
                     </label>
                     <label className="flex justify-center gap-1">

@@ -36,7 +36,7 @@ export default function LocationPage() {
         getLocation()
     }, [])
 
-    if (!location) return null
+    if (location == undefined) return null
     return (
         <div className="m-auto px-4 py-2 flex flex-col gap-4 bg-stone-600 w-2xl">
             <div className="m-auto w-lg">

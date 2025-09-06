@@ -49,7 +49,7 @@
 
 @layer components {
   .panel {
-    @apply ring-slate-200 outline-2 h-fit w-lg rounded-lg py-12 lg:px-24 px-6
+    @apply ring-slate-200 outline-2 h-fit w-lg rounded-lg py-6 lg:px-12 px-4 bg-background
   }
 
   .center {
@@ -63,6 +63,10 @@
   .link-scrolling {
     @apply w-fit text-nowrap
   }
+
+  .table-heading {
+    @apply text-xl mb-4 bg-zinc-600/70
+  }
 }
 
 @layer utilities {
@@ -71,7 +75,7 @@
   }
 
   .panel-icon {
-    @apply lg:size-14 size-6 
+    @apply md:size-14 size-6 
   }
 
   .panel-link {
@@ -79,7 +83,7 @@
   }
 
   .button {
-    @apply text-sm lg:text-lg h-fit font-bold italic border-2 py-1 px-2 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600 cursor-pointer;
+    @apply text-[12px] lg:text-lg h-fit font-bold border-1 px-1.5 py-1 rounded-lg hover:bg-fuchsia-800 border-fuchsia-600 cursor-pointer;
   }
 
   .text-input {
@@ -87,7 +91,7 @@
   }
 
   .text-input-label {
-    @apply absolute pointer-events-none cursor-text bg-background px-1 left-2 top-1.5
+    @apply absolute pointer-events-none cursor-text bg-background px-0.5 left-2 top-1.5
   }
 
   .search-view {

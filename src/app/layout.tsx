@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, K2D } from "next/font/google";
 import "./globals.css";
-import { SnackbarProvider } from "@/components/context/SnackbarContext";
+import { StatusProvider } from "@/components/context/StatusContext";
 import NextAuthProvider from "@/components/context/NextAuthProvider";
 import HeaderBar from "@/components/HeaderBar";
 
@@ -41,14 +41,14 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${k2d.variable} antialiased`}
       >
-        <SnackbarProvider>
+        <StatusProvider>
           <NextAuthProvider>
-            <div className="min-h-screen font-standard h-fit bg-[url('/pickle-vector-tesselation.png')] bg-repeat lg:bg-size-[30vw] bg-size-[100vw] ">
+            <div className="min-h-screen font-standard bg-[url('/pickle-vector-tesselation.png')] bg-repeat lg:bg-size-[30vw] bg-size-[100vw] ">
               <HeaderBar />
               {children}
             </div>
           </NextAuthProvider>
-        </SnackbarProvider>
+        </StatusProvider>
       </body>
     </html>
   );

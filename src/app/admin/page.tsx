@@ -11,6 +11,8 @@ import DescriptionModal from "@/components/admin/modal/DescriptionModal";
 import ColumnNameTable from "@/components/admin/ColumnNameTable";
 import AdminPermissionTable from "@/components/admin/AdminPermissionTable";
 import Papa from 'papaparse';
+import LocationRecord from "@/components/admin/LocationRecord";
+import ToggleChip from "@/components/ToggleChip";
 
 export interface AdminEditModalProps {
     editingLocation?: Venue
@@ -64,12 +66,12 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="flex flex-row gap-4">
-            <div className="flex flex-col gap-4 items-center">
-                <div className="w-fit bg-slate-800">
-                    <table className="border-spacing-y-2 border-separate w-4xl
-                [&_td]:border-y [&_td]:border-slate-500  [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate">
-                        <caption className="text-xl mb-4">Existing Locations</caption>
+        <div className="flex flex-row gap-4 center">
+            <div className="max-w-4xl flex flex-col gap-4 items-center">
+                <div>
+                    <table className="border-spacing-y-2 border-separate bg-slate-800
+                [&_td]:border-y [&_td]:border-slate-500 [&_td]:text-nowrap [&_th]:text-nowrap [&_td]:max-w-[200px] [&_td]:p-1 [&_td]:truncate">
+                        <caption className="table-heading">Existing Locations</caption>
                         <thead>
                             <tr>
                                 <th>Location Name</th>
@@ -82,20 +84,10 @@ export default function AdminPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {locations?.map((loc) =>
-                                <tr key={loc._id} className={`${loc == editingLocation ? 'bg-blue-800' : ''} hover:cursor-pointer`} onClick={() => setEditingLocation(loc)}>
-                                    <td>{loc.name}</td>
-                                    <td>{loc.address}</td>
-                                    <td className="link"><a href={loc.url}>{loc.url}</a></td>
-                                    <td>{loc.zipcode}</td>
-                                    <BooleanCell value={loc.openPlay} />
-                                    <BooleanCell value={loc.reservations} />
-                                    <BooleanCell value={loc.lessons} />
-                                </tr>
-                            )}
+                            {locations?.map((loc) => <LocationRecord loc={loc} setEditingLocation={setEditingLocation} selected={loc == editingLocation} />)}
                         </tbody>
                     </table>
-                    <div className="h-12 flex m-2 p-1 items-center gap-2 bg-slate-700">
+                    <div className="h-12 flex mt-4 p-1 items-center gap-2 bg-zinc-600/70">
                         <span className="inline text-lg">Click to select location record</span>
                         {editingLocation && <div className="inline-flex  *:hover:cursor-pointer">
                             <BiFile className="icon" onClick={() => editWithOperation(editingLocation, 'description')} />
@@ -107,7 +99,7 @@ export default function AdminPage() {
                 </div>
                 <ApprovalTable refreshLocations={refreshLocations} stagedLocations={stagedLocations!} />
 
-                <div className="w-4xl gap-12 bg-slate-800 p-2">
+                <div className="w-full gap-12 bg-slate-800 p-2">
                     <div className="m-auto grid grid-cols-[220px_120px_180px] w-fit items-center place-items-center">
                         <div className="*:block">
                             <h3>Spreadsheet File Upload</h3>

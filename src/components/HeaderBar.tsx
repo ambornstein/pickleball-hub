@@ -3,6 +3,7 @@ import { BiUser } from "react-icons/bi";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import LoadingIcon from "./LoadingIcon";
 
 export default function HeaderBar() {
     const [expanded, setExpanded] = useState(false)
@@ -14,10 +15,10 @@ export default function HeaderBar() {
         }
     }, [session, status, update]);
 
-    return (<header className="sticky z-50 h-fit top-0 flex items-center p-4 gap-4 lg:pr-20 lg:gap-0 ">
+    return (<header className="sticky z-50 h-20 top-0 flex items-center p-4 gap-4 lg:pr-20 lg:gap-0 ">
         <a href='/' className="text-lg lg:text-2xl bg-zinc-700/50 p-2 rounded-sm lg:p-4">Houston Pickleball Hub</a>
         <div className="ml-auto flex gap-2">
-            {status == 'loading' ? <Image width={75} height={75} alt="loading" className="invert rounded-2xl" src="/padel.gif"/> :
+            {status == 'loading' ? <LoadingIcon size={75}/> :
                 session ? <>
                     < div className="flex gap-4 bg-neutral-700 items-center p-2 rounded-md cursor-pointer" onClick={() => setExpanded(!expanded)}>
                         <BiUser className="size-8" />
