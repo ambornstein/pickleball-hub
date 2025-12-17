@@ -9,6 +9,7 @@ A proof-of-concept hub site that aggregates many pickleball venues and displays 
 
 ## Tech Stack
 * Next.js
+* NextAuth
 * TailwindCSS
 * MongoDB / Mongoose
 * Mapbox SDK
